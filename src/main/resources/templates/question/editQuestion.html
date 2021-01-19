@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование вопроса</title>
+</head>
+<body>
+Изменить существующий вопрос:
+<form th:method="PATCH"
+      th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
+      th:object="${question}">
+    <p>Текст вопроса: <input type="text" th:field="*{questionText}"/></p>
+    <p>Вариант А : <input type="text" th:field="*{optionA}"/></p>
+    <p>Вариант Б: <input type="text" th:field="*{optionB}"/></p>
+    <p>Вариант В: <input type="text" th:field="*{optionC}"/></p>
+    <p>Вариант Г: <input type="text" th:field="*{optionD}"/></p>
+    <p>Правильный ответ: <input type="text" th:field="*{answer}"/></p>
+    <input type="submit" value="Обновить данные"/></div>
+</form>
+</body>
+</html>

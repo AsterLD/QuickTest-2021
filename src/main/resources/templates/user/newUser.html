@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавить нового пользователя</title>
+</head>
+<body>
+<div th:if="${message}"> Пользователь с таким именем уже существует!</div>
+<form th:action="@{/users}" th:method="POST">
+    <p>Имя пользователя : <input type="text" name="username" required/></p>
+    <p>Пароль: <input type="password" name="password" required/></p>
+    <p>ФИО: <input type="text" name="fullName"/></p>
+    <p>Должность: <input type="text" name="position"/></p>
+    <p>Отдел: <input type="text" name="department"/></p>
+    <p>Email: <input type="email" name="email"/></p>
+    <p>Роль:<select name="role">
+        <option value="USER" selected >User</option>
+        <option value="ADMIN" >Admin</option>
+    </select></p>
+    <input type="submit" value="Create"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование теста</title>
+</head>
+<body>
+<h3>Редактирование теста</h3>
+<form th:method="PATCH" th:action="@{/tests/{testId}(testId=${test.getTestId()})}" th:object="${test}">
+    Название теста:
+    <p><input type="text" th:field="*{testName}" id="testName"/></p>
+    Доступен для пользователей?
+    <p><input type="checkbox" th:field="*{active}" id="isActive"/></p>
+    <p><input type="submit" value="Обновить данные"/></p>
+</form>
+<form th:method="DELETE" th:action="@{/tests/{testId}(testId=${test.getTestId()})}" th:object="${test}">
+    <p><input type="submit" value="Удалить тестирование"/></p>
+</form>
+СПИСОК ВОПРОСОВ:
+<p><a th:href="@{/tests/{testId}/new(testId=${test.getTestId()})}">Добавить вопрос</a></p>
+<div th:each="question : ${test.getQuestionList()}">
+    <hr/>
+    <p>Вопрос № <a th:text="${question.questionId}"></a> </p>
+    <p>Текст вопроса : <a th:text="${question.questionText}"></a></p>
+    <p>Вариант А : <a th:text="${question.optionA}"></a></p>
+    <p>Вариант B : <a th:text="${question.optionB}"></a></p>
+    <p>Вариант C : <a th:text="${question.optionC}"></a></p>
+    <p>Вариант D : <a th:text="${question.optionD}"></a></p>
+    <p>Ответ : <a th:text="${question.answer}"></a></p>
+    <a th:href="@{/tests/{testId}/{questionId}/edit
+        (testId=${test.getTestId()},questionId=${question.getQuestionId()})}"
+       th:text="Изменить">test</a>
+</div>
+<hr/>
+</body>
+</html>

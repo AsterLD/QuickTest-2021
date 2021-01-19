@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить вопрос</title>
+</head>
+<body>
+Добавить новый вопрос:
+<form th:action="@{/tests/{test_id}(test_id=${testId})}" method="POST" th:object="${question}">
+    <p>Текст вопроса: <input type="text" name="questionText"/></p>
+    <p>Вариант А : <input type="text" name="optionA"/></p>
+    <p>Вариант Б: <input type="text" name="optionB"/></p>
+    <p>Вариант В: <input type="text" name="optionC"/></p>
+    <p>Вариант Г: <input type="text" name="optionD"/></p>
+    <p>Правильный ответ: <input type="text" name="answer"/></p>
+    <input type="submit" value="Добавить вопрос"/></div>
+</form>
+</body>
+</html>

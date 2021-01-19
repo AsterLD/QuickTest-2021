@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех тестирований</title>
+</head>
+<body>
+<h3>СПИСОК ТЕСТОВ:</h3>
+<hr/>
+<div th:each="test : ${tests}">
+    <p>Тест №: <a th:text="${test.getTestId()}"></a></p>
+    <p>Название: <a th:text="${test.getTestName()}"></a></p>
+    <a th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
+    <hr/>
+</div>
+<a th:href="@{/tests/new}">Добавить новый тест</a>
+</body>
+</html>

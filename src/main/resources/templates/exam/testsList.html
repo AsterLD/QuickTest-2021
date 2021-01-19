@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список доступных тестов</title>
+</head>
+<body>
+СПИСОК ТЕСТОВ:
+<hr/>
+<div th:each="test : ${tests}">
+    <p><a th:href="@{/exam/{testId}(testId=${test.getTestId()})}"
+          th:text="${test.getTestName()}"
+          th:if="${test.isActive()}">test</a></p>
+    <hr/>
+</div>
+
+<p><a th:href="@{/exam/result}">Просмотреть результаты</a></p>
+</body>
+</html>
