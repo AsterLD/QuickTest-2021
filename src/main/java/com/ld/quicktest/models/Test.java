@@ -3,6 +3,13 @@ package com.ld.quicktest.models;
 import javax.persistence.*;
 import java.util.List;
 
+/*
+ * Класс Test, используется для хранения информации о тестировании,
+ * имеет свзяь один к многим с классом Result, а также связь один-ко-многим с классом Question
+ * List<Question> questionList - для хранения вопросов тестирования,
+ * List<Result> resultList - для хранения результатов прохождения тестирования
+ */
+
 @Entity
 @Table(name = "tests")
 public class Test {

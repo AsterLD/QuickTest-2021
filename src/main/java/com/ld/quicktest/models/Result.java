@@ -2,6 +2,11 @@ package com.ld.quicktest.models;
 
 import javax.persistence.*;
 
+/*
+ * Класс Result, используется для хранения одного результата прохождения тестирования пользователем,
+ * имеет связь многие-к-одному с классом Test, и связь многие-к-одному с классом User
+ */
+
 @Entity
 @Table(name = "results")
 public class Result {

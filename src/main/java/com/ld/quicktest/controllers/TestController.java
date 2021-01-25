@@ -2,7 +2,6 @@ package com.ld.quicktest.controllers;
 
 import com.ld.quicktest.models.Test;
 import com.ld.quicktest.repos.TestRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class TestController {
 
-    private TestRepo testRepo;
+    private final TestRepo testRepo;
 
-    @Autowired
     public TestController(TestRepo testRepo) {
         this.testRepo = testRepo;
     }

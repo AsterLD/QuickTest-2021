@@ -3,7 +3,6 @@ package com.ld.quicktest.controllers;
 import com.ld.quicktest.models.Question;
 import com.ld.quicktest.repos.QuestionRepo;
 import com.ld.quicktest.repos.TestRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

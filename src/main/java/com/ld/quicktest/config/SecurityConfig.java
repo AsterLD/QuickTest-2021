@@ -8,6 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    /*
+     * Класс конфигурации, в котором заданы настройки хэширования паролей.
+     */
+
     @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder(8);

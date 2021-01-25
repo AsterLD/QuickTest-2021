@@ -3,6 +3,11 @@ package com.ld.quicktest.models;
 import javax.persistence.*;
 import java.util.List;
 
+/*
+ * Класс User, используется для хранения информации о пользователе,
+ * имеет свзяь один-ко-многим с классом Result
+ */
+
 @Entity
 @Table(name = "users")
 public class User {

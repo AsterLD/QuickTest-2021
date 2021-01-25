@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Результаты всех тестирований</title>
 </head>
 <body>
+
+<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/results/search}">
+    <p>Поиск результатов:</p>
+    <input type="text" name="search"/>
+    Искать по:
+    <select name="searchType">
+    <option value="fullName" >ФИО</option>
+    <option value="testName" >Тестированию</option>
+    </select>
+    <input type="submit" value="Поиск"/>
+</form>
 <hr/>
+Результаты:
 <div th:each="result : ${results}">
     <p>Название теста : <a th:text="${result.getTest().getTestName()}"></a></p>
     <p>Правильно ответил на: <a th:text="${result.getNumberOfCorrectAnswers()}"></a> из

@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,12 +41,6 @@ public class ExamController {
         return "exam/test";
     }
 
-    @GetMapping("/results")
-    public String showResults(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("results", resultRepo.findResultsByUser(userRepo.findByUsername(auth.getName())));
-        return "exam/resultList";
-    }
 
     @PostMapping()
     public String saveResult(@RequestParam HashMap<String, String> answers, Long testId, Result result) {
