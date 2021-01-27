@@ -19,10 +19,12 @@
 <hr/>
 Результаты:
 <div th:each="result : ${results}">
+    <P>ФИО: <a th:text="${result.getUser().getFullName()}"></a></P>
     <p>Название теста : <a th:text="${result.getTest().getTestName()}"></a></p>
     <p>Правильно ответил на: <a th:text="${result.getNumberOfCorrectAnswers()}"></a> из
         <a th:text="${result.getNumberOfQuestion()}"></a> Вопросов</p>
     <p>Процент правильных ответов : <a th:text="${result.getPercentageOfCorrectAnswers()}"></a>%</p>
+    <p>Пройден: <a th:text="${#dates.format(result.getResultDate(), 'yyyy-MM-dd HH:mm:ss')}"></a></p>
     <hr/>
 </div>
 </body>

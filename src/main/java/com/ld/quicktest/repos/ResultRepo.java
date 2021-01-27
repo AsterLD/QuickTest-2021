@@ -16,5 +16,4 @@ public interface ResultRepo extends CrudRepository <Result, Long> {
     List<Result> findResultsByUser(User user);
     List<Result> findResultsByUserIn(List<User> users);
     List<Result> findResultsByTestIn(List<Test> test);
-
 }

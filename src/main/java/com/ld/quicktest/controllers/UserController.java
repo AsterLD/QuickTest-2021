@@ -88,5 +88,4 @@ public class UserController {
         userRepo.deleteById(userId);
         return "redirect:/users";
     }
-
 }

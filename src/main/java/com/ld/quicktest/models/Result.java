@@ -1,6 +1,9 @@
 package com.ld.quicktest.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /*
  * Класс Result, используется для хранения одного результата прохождения тестирования пользователем,
@@ -32,6 +35,11 @@ public class Result {
 
     @Column(name = "percentage_of_correct_answers", precision = 2)
     private double percentageOfCorrectAnswers;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "result_date")
+    private Date resultDate;
 
     public Long getResultId() {
         return resultId;
@@ -79,5 +87,13 @@ public class Result {
 
     public void setPercentageOfCorrectAnswers(double percentageOfCorrectAnswers) {
         this.percentageOfCorrectAnswers = percentageOfCorrectAnswers;
+    }
+
+    public Date getResultDate() {
+        return resultDate;
+    }
+
+    public void setResultDate(Date resultDate) {
+        this.resultDate = resultDate;
     }
 }

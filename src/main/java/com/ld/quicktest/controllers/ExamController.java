@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,6 @@ public class ExamController {
         return "exam/test";
     }
 
-
     @PostMapping()
     public String saveResult(@RequestParam HashMap<String, String> answers, Long testId, Result result) {
         int answerResult = 0;
@@ -50,7 +50,6 @@ public class ExamController {
         List<Question> questionList = test.getQuestionList();
 
         answers.keySet().removeIf(key -> !key.contains("answer"));
-        System.out.println(answers.keySet());
         for(Map.Entry<String, String> answer : answers.entrySet()) {
             for (Question question: questionList) {
                 if(answer.getKey().contains(question.getQuestionId().toString())) {

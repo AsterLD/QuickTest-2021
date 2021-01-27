@@ -36,24 +36,20 @@ public class TestController {
     }
 
     @PatchMapping("/{testId}")
-    public String updateTest(@PathVariable("testId") Long testId,
-                             Test test) {
+    public String updateTest(@PathVariable("testId") Long testId, Test test) {
         testRepo.save(test);
         return "redirect:/tests";
     }
 
     @DeleteMapping("/{testId}")
-    public String deleteTest(@PathVariable("testId") Long testId,
-                             Test test) {
+    public String deleteTest(@PathVariable("testId") Long testId, Test test) {
         testRepo.deleteById(testId);
         return "redirect:/tests";
     }
 
     @GetMapping("/{testId}/edit")
-    public String editTest( @PathVariable("testId") Long testId,
-                            Model model) {
+    public String editTest( @PathVariable("testId") Long testId, Model model) {
         model.addAttribute("test", testRepo.findByTestId(testId));
         return "test/editTest";
     }
-
 }

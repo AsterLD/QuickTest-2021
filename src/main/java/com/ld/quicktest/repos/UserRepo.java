@@ -16,5 +16,4 @@ public interface UserRepo extends CrudRepository<User, Long> {
     User findByUserId(Long userId);
     List<User> findUserByFullNameContains(String fullName);
     List<User> findAll();
-
 }

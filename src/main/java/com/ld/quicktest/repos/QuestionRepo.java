@@ -9,5 +9,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface QuestionRepo extends CrudRepository<Question, Long> {
     Question findQuestionByQuestionId(Long questionId);
-
 }

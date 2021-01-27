@@ -70,5 +70,4 @@ public class Test {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 }
