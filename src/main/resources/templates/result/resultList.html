@@ -5,22 +5,24 @@
     <title>Результаты всех тестирований</title>
 </head>
 <body>
-
-<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/results/search}">
+<header th:insert="fragments/header"></header>
+<form sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
     <p>Поиск результатов:</p>
     <input type="text" name="search"/>
     Искать по:
     <select name="searchType">
-    <option value="fullName" >ФИО</option>
-    <option value="testName" >Тестированию</option>
+        <option value="fullName" >ФИО</option>
+        <option value="testName" >Тестированию</option>
+        <option value="departmentName" >Отделу</option>
     </select>
     <input type="submit" value="Поиск"/>
+    <hr/>
 </form>
-<hr/>
 Результаты:
 <div th:each="result : ${results}">
-    <P>ФИО: <a th:text="${result.getUser().getFullName()}"></a></P>
-    <p>Название теста : <a th:text="${result.getTest().getTestName()}"></a></p>
+    <p>ФИО: <a th:text="${result.getUser().getFullName()}"></a></p>
+    <p>Отдел: <a th:text="${result.getUser().getDepartment()}"></a></p>
+    <p>Название тестирования : <a th:text="${result.getTest().getTestName()}"></a></p>
     <p>Правильно ответил на: <a th:text="${result.getNumberOfCorrectAnswers()}"></a> из
         <a th:text="${result.getNumberOfQuestion()}"></a> Вопросов</p>
     <p>Процент правильных ответов : <a th:text="${result.getPercentageOfCorrectAnswers()}"></a>%</p>

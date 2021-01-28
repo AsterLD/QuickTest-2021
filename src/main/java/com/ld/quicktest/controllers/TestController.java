@@ -24,6 +24,13 @@ public class TestController {
         return "test/testsList";
     }
 
+    @GetMapping("/search")
+    public String findTests(Model model, @RequestParam (name = "search", defaultValue = "") String search) {
+        model.addAttribute("tests",
+                testRepo.findTestByTestNameContains(search));
+        return "test/testsList";
+    }
+
     @GetMapping("/new")
     public String createNewTest(@ModelAttribute("test") Test test) {
         return "test/newTest";

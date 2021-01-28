@@ -5,17 +5,17 @@
     <title>Описание пользователя</title>
 </head>
 <body>
-<p><a th:href="@{/users}">Перейти к списку пользователей</a></p>
+<header th:insert="fragments/header"></header>
     <p>Имя пользователя : <a th:text="${user.getUsername()}"></a></p>
     <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
     <p>Должность: <a th:text="${user.getPosition()}"></a></p>
     <p>Отдел: <a th:text="${user.getDepartment()}"></a></p>
     <p>Email: <a th:text="${user.getEmail()}"></a></p>
     <p>Роль:<a th:text="${user.getRole()}"></a></p>
-<p><a th:href="@{/users/{userId}/edit(userId=${user.getUserId()})}">Редактировать пользователя</a></p>
-<p><a th:href="@{/users/{userId}/edit/password(userId=${user.getUserId()})}">Сменить пароль</a></p>
-<form th:method="DELETE" th:action="@{/users/{userId}(userId=${user.getUserId()})}" th:object="${user}">
-    <input type="submit" value="Удалить пользователя"/>
-</form>
+    <p><a th:href="@{/users/{userId}/edit(userId=${user.getUserId()})}">Редактировать пользователя</a></p>
+    <p><a th:href="@{/users/{userId}/edit/password(userId=${user.getUserId()})}">Сменить пароль</a></p>
+    <form th:method="DELETE" th:action="@{/users/{userId}(userId=${user.getUserId()})}">
+        <input type="submit" value="Удалить пользователя"/>
+    </form>
 </body>
 </html>

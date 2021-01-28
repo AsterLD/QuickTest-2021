@@ -44,11 +44,11 @@ public class QuestionController {
         return "redirect:/tests/{testId}/edit";
     }
 
-    @DeleteMapping("/{testId}")
+    @DeleteMapping("/{questionId}")
     public String deleteQuestion(
                                  @PathVariable("testId") Long testId,
                                  Question question) {
-        questionRepo.deleteById(question.getQuestionId());
+        questionRepo.delete(question);
         return "redirect:/tests/{testId}/edit";
     }
 

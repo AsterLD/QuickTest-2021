@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<div th:fragment="header">
+    <header>
+        <fieldset>
+            <a th:href="@{/}">Главная</a>
+            <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Тестирования</a>
+            <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты</a>
+            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
+            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a></p>
+            <form th:action="@{/logout}" th:method="POST" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"
+                  th:align="right">
+                Текущий пользователь: <a th:text="${#authentication.getName()}"></a>
+                <input type="submit" value="Выйти"/>
+            </form>
+        </fieldset>
+    </header>
+</div>
+</html>

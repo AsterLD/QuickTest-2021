@@ -13,5 +13,5 @@ import java.util.List;
 public interface TestRepo extends CrudRepository<Test, Long> {
     List<Test> findAll();
     Test findByTestId(Long testId);
-    List<Test>  findTestByTestNameContains(String testName);
+    List<Test> findTestByTestNameContains(String testName);
 }

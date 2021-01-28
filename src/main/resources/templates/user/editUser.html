@@ -5,6 +5,7 @@
     <title>Изменить данные пользователя</title>
 </head>
 <body>
+<header th:insert="fragments/header"></header>
 <div th:if="${message}"> Пользователь с таким именем уже существует!</div>
 <form th:action="@{/users/{userId}(userId=${user.getUserId()})}" th:method="PATCH" th:object="${user}">
     <p>Имя пользователя : <input type="text" th:field="*{username}" required/></p>
@@ -17,7 +18,7 @@
             <option value="USER" selected >User</option>
             <option value="ADMIN" >Admin</option>
             </select></p>
-    <input type="submit" value="Обновить"/></div>
+    <input type="submit" value="Обновить"/>
 </form>
 </body>
 </html>

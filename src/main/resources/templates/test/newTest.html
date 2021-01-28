@@ -2,16 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Создать новый тест</title>
+    <title>Создать новое тестирование</title>
 </head>
 <body>
+<header th:insert="fragments/header"></header>
 <form form th:method="POST" th:action="@{/tests}" th:object="${test}">
-    <h3>Создать новый тест</h3>
-    Название теста:
+    <h3>Создать новый тестирование</h3>
+    Название тестирования:
     <p><input type="text" name="testName"/></p>
-    Доступен для пользователей?
+    Доступно для пользователей?
     <p><input type="checkbox" name="active"/></p>
-    <input type="submit" value="Создать тест"/>
+    <input type="submit" value="Создать тестирование"/>
 </form>
 
 </body>

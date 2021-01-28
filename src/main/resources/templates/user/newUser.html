@@ -4,6 +4,7 @@
     <title>Добавить нового пользователя</title>
 </head>
 <body>
+<header th:insert="fragments/header"></header>
 <div th:if="${message}"> Пользователь с таким именем уже существует!</div>
 <form th:action="@{/users}" th:method="POST">
     <p>Имя пользователя : <input type="text" name="username" required/></p>

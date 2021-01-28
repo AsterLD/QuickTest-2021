@@ -12,8 +12,8 @@
     <artifactId>quicktest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>QuickTest</name>
-    <description>Demo project for Spring Boot</description>
-
+    <description>Web App to create and take a tests</description>
+    <packaging>war</packaging>
     <properties>
         <java.version>11</java.version>
     </properties>

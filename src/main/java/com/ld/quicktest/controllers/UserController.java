@@ -27,6 +27,21 @@ public class UserController {
         return "user/usersList";
     }
 
+    @GetMapping("/search")
+    public String findUsers(Model model,
+                            @RequestParam (name = "search", defaultValue = "") String search,
+                            @RequestParam(name = "searchType") String searchType) {
+        switch (searchType) {
+            case "fullName":
+                model.addAttribute("users", userRepo.findUserByFullNameContains(search));
+                break;
+            case "departmentName":
+                model.addAttribute("users", userRepo.findUserByDepartmentContains(search));
+                break;
+        }
+        return "user/usersList";
+    }
+
     @GetMapping("/{userId}")
     public String showUserInfo(Model model, @PathVariable Long userId) {
         model.addAttribute("user", userRepo.findByUserId(userId));

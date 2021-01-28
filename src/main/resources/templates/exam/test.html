@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Тест</title>
+    <title>Тестирование</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/exam}" th:object="${test}" autocomplete="off">
     <input type="hidden" th:value="${test.testId}" th:name="testId">
     <h2>Тест: <a th:text="${test.getTestName()}"></a> </h2>
-    <hr/>
-<div th:each="question : ${test.getQuestionList()}">
-    <p><b th:text="${question.getQuestionText()}"></b></p>
-    <p><input type="radio"
-              th:value="${question.getOptionA()}"
-              th:name="${'answer['+ question.questionId + ']'}"
-              th:text="${question.getOptionA()}">
-    </p>
-    <p><input type="radio"
-              th:value="${question.getOptionB()}"
-              th:name="${'answer['+ question.questionId + ']'}"
-              th:text="${question.getOptionB()}">
-    </p>
-    <p><input type="radio"
-              th:value="${question.getOptionC()}"
-              th:name="${'answer['+ question.questionId + ']'}"
-              th:text="${question.getOptionC()}">
-    </p>
-    <p><input type="radio"
-              th:value="${question.getOptionD()}"
-              th:name="${'answer['+ question.questionId + ']'}"
-              th:text="${question.getOptionD()}">
-    </p>
-    <hr/>
-</div>
+    <div th:each="question : ${test.getQuestionList()}">
+        <fieldset>
+        <p><b th:text="${question.getQuestionText()}"></b></p>
+        <p><input type="radio"
+                  th:value="${question.getOptionA()}"
+                  th:name="${'answer['+ question.questionId + ']'}"
+                  th:text="${question.getOptionA()}">
+        </p>
+        <p><input type="radio"
+                  th:value="${question.getOptionB()}"
+                  th:name="${'answer['+ question.questionId + ']'}"
+                  th:text="${question.getOptionB()}">
+        </p>
+        <p><input type="radio"
+                  th:value="${question.getOptionC()}"
+                  th:name="${'answer['+ question.questionId + ']'}"
+                  th:text="${question.getOptionC()}">
+        </p>
+        <p><input type="radio"
+                  th:value="${question.getOptionD()}"
+                  th:name="${'answer['+ question.questionId + ']'}"
+                  th:text="${question.getOptionD()}">
+        </p>
+        </fieldset>
+    </div>
     <p><input type="submit" value="Закончить тестирование"></p>
 </form>
 </body>

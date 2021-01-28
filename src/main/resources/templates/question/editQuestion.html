@@ -5,17 +5,23 @@
     <title>Редактирование вопроса</title>
 </head>
 <body>
+<header th:insert="fragments/header"></header>
 Изменить существующий вопрос:
 <form th:method="PATCH"
       th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
       th:object="${question}">
     <p>Текст вопроса: <input type="text" th:field="*{questionText}"/></p>
-    <p>Вариант А : <input type="text" th:field="*{optionA}"/></p>
-    <p>Вариант Б: <input type="text" th:field="*{optionB}"/></p>
-    <p>Вариант В: <input type="text" th:field="*{optionC}"/></p>
-    <p>Вариант Г: <input type="text" th:field="*{optionD}"/></p>
+    <p>Вариант А: <input type="text" th:field="*{optionA}"/></p>
+    <p>Вариант B: <input type="text" th:field="*{optionB}"/></p>
+    <p>Вариант C: <input type="text" th:field="*{optionC}"/></p>
+    <p>Вариант D: <input type="text" th:field="*{optionD}"/></p>
     <p>Правильный ответ: <input type="text" th:field="*{answer}"/></p>
-    <input type="submit" value="Обновить данные"/></div>
+    <p><input type="submit" value="Обновить данные"/></p>
+</form>
+<form th:method="DELETE"
+      th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
+      th:object="${question}">
+<p>    <input type="submit" value="Удалить Вопрос"/></p>
 </form>
 </body>
 </html>

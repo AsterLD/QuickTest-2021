@@ -46,6 +46,10 @@ public class ResultController {
                 model.addAttribute("results",
                         resultRepo.findResultsByTestIn(testRepo.findTestByTestNameContains(search)));
                 break;
+            case "departmentName":
+                model.addAttribute("results",
+                        resultRepo.findResultsByUserIn(userRepo.findUserByDepartmentContains(search)));
+                break;
         }
         return "result/resultList";
     }
