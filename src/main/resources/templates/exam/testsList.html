@@ -9,10 +9,11 @@
 СПИСОК ТЕСТОВ:
 <hr/>
 <div th:each="test : ${tests}">
-    <p><a th:href="@{/exam/{testId}(testId=${test.getTestId()})}"
-          th:text="${test.getTestName()}"
-          th:if="${test.isActive()}">test</a></p>
-    <hr/>
+    <div th:if="${test.isActive()}">
+        <a th:href="@{/exam/{testId}(testId=${test.getTestId()})}"
+              th:text="${test.getTestName()}">test</a>
+        <hr/>
+    </div>
 </div>
 </body>
 </html>

@@ -11,7 +11,7 @@
             <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Тестирования</a>
             <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты</a>
             <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
-            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a></p>
+            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a>
             <form th:action="@{/logout}" th:method="POST" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"
                   th:align="right">
                 Текущий пользователь: <a th:text="${#authentication.getName()}"></a>
