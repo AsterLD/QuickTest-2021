@@ -15,7 +15,6 @@ import java.util.List;
 public class Test {
 
     @Id
-    @Column(name = "test_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
@@ -25,10 +24,8 @@ public class Test {
     @OneToMany(mappedBy = "test", cascade = {CascadeType.ALL})
     private List<Question> questionList;
 
-    @Column(name = "test_name")
     private String testName;
 
-    @Column(name = "is_active")
     private boolean isActive;
 
     public Long getTestId() {

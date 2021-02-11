@@ -13,7 +13,6 @@ import javax.persistence.*;
 public class Question {
 
     @Id
-    @Column(name = "question_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
 
@@ -21,25 +20,18 @@ public class Question {
     @JoinColumn(name="test_id")
     private Test test;
 
-    @Column(name = "question_text")
     private String questionText;
 
-    @Column(name = "option_a")
     private String optionA;
 
-    @Column(name = "option_b")
     private String optionB;
 
-    @Column(name = "option_c")
     private String optionC;
 
-    @Column(name = "option_d")
     private String optionD;
 
-    @Column(name = "answer")
     private String answer;
 
-    @Column(name = "answer_value")
     private int answerValue;
 
     public Long getQuestionId() {

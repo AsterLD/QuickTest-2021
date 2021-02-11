@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,10 @@ public class ExamController {
             }
         result.setNumberOfCorrectAnswers(answerResult);
         result.setNumberOfQuestion(questionList.size());
-        result.setPercentageOfCorrectAnswers((double) answerResult / questionList.size() * 100);
+        System.out.println(answerResult);
+        System.out.println(questionList.size());
+        result.setPercentageOfCorrectAnswers(BigDecimal.valueOf((float) answerResult * 100 / questionList.size()));
+        System.out.println(BigDecimal.valueOf( 100 * answerResult / questionList.size()));
         result.setTest(test);
         result.setUser(userRepo.findByUsername(auth.getName()));
         resultRepo.save(result);

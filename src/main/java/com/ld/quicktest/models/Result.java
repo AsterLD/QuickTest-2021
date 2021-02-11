@@ -3,6 +3,7 @@ package com.ld.quicktest.models;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /*
@@ -15,30 +16,25 @@ import java.util.Date;
 public class Result {
 
     @Id
-    @Column(name = "result_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long resultId;
 
     @ManyToOne()
-    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne()
     @JoinColumn(name="test_id")
     private Test test;
 
-    @Column(name = "number_of_questions")
     private int numberOfQuestion;
 
-    @Column(name = "number_of_correct_answers")
     private int numberOfCorrectAnswers;
 
-    @Column(name = "percentage_of_correct_answers", precision = 2)
-    private double percentageOfCorrectAnswers;
+    @Column(precision = 3)
+    private BigDecimal percentageOfCorrectAnswers;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "result_date")
     private Date resultDate;
 
     public Long getResultId() {
@@ -81,11 +77,11 @@ public class Result {
         this.numberOfCorrectAnswers = numberOfCorrectAnswers;
     }
 
-    public double getPercentageOfCorrectAnswers() {
+    public BigDecimal getPercentageOfCorrectAnswers() {
         return percentageOfCorrectAnswers;
     }
 
-    public void setPercentageOfCorrectAnswers(double percentageOfCorrectAnswers) {
+    public void setPercentageOfCorrectAnswers(BigDecimal percentageOfCorrectAnswers) {
         this.percentageOfCorrectAnswers = percentageOfCorrectAnswers;
     }
 

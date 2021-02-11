@@ -21,13 +21,13 @@
 <p><a th:href="@{/tests/{testId}/new(testId=${test.getTestId()})}">Добавить вопрос</a></p>
 <div th:each="question : ${test.getQuestionList()}">
     <hr/>
-    <p>Вопрос № <a th:text="${question.questionId}"></a> </p>
+    <p>ID Вопроса: <a th:text="${question.questionId}"></a> </p>
     <p>Текст вопроса : <a th:text="${question.questionText}"></a></p>
     <p>Вариант А: <a th:text="${question.optionA}"></a></p>
     <p>Вариант B: <a th:text="${question.optionB}"></a></p>
     <p>Вариант C: <a th:text="${question.optionC}"></a></p>
     <p>Вариант D: <a th:text="${question.optionD}"></a></p>
-    <p>Ответ : <a th:text="${question.answer}"></a></p>
+    <p>Ответ: <a th:text="${question.answer}"></a></p>
     <a th:href="@{/tests/{testId}/{questionId}/edit
         (testId=${test.getTestId()},questionId=${question.getQuestionId()})}"
        th:text="Изменить">test</a>

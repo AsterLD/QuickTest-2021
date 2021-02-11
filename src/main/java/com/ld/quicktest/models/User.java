@@ -20,28 +20,20 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private List<Result> resultList;
 
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "active")
     private boolean isActive;
 
-    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "position")
     private String position;
 
-    @Column(name = "department")
     private String department;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "role")
     private String role;
 
     public Long getUserId() {
