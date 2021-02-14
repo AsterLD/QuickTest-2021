@@ -20,6 +20,7 @@ public class Result {
     private Long resultId;
 
     @ManyToOne()
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne()
