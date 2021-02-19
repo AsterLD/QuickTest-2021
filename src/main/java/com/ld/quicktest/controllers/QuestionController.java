@@ -24,13 +24,13 @@ public class QuestionController {
     @GetMapping("/new")
     public String createNewQuestion(@PathVariable("testId") Long testId, Model model, Question question) {
         model.addAttribute("question", question);
-        model.addAttribute("test", testRepo.findByTestId(testId));
+        model.addAttribute("test", testRepo.findTestByTestId(testId));
         return "question/newQuestions";
     }
 
     @PostMapping
     public String saveNewQuestion(@PathVariable("testId") Long testId, Question question) {
-        question.setTest(testRepo.findByTestId(testId));
+        question.setTest(testRepo.findTestByTestId(testId));
         questionRepo.save(question);
         return "redirect:/tests/{testId}/edit";
     }
@@ -39,7 +39,7 @@ public class QuestionController {
     public String updateQuestion(@PathVariable("questionId") Long questionId,
                                  @PathVariable("testId") Long testId,
                                  Question question) {
-        question.setTest(testRepo.findByTestId(testId));
+        question.setTest(testRepo.findTestByTestId(testId));
         questionRepo.save(question);
         return "redirect:/tests/{testId}/edit";
     }

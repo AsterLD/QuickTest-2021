@@ -29,7 +29,7 @@ public class ResultController {
     public String showResults(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("results",
-                resultRepo.findResultsByUser(userRepo.findByUsername(auth.getName())));
+                resultRepo.findResultsByUser(userRepo.findUserByUsername(auth.getName())));
         return "result/resultList";
     }
 
@@ -40,15 +40,15 @@ public class ResultController {
         switch (searchType) {
             case "fullName":
                 model.addAttribute("results",
-                        resultRepo.findResultsByUserIn(userRepo.findUserByFullNameContains(search)));
+                        resultRepo.findResultsByUserIn(userRepo.findUsersByFullNameContains(search)));
                 break;
             case "testName":
                 model.addAttribute("results",
-                        resultRepo.findResultsByTestIn(testRepo.findTestByTestNameContains(search)));
+                        resultRepo.findResultsByTestIn(testRepo.findTestsByTestNameContains(search)));
                 break;
             case "departmentName":
                 model.addAttribute("results",
-                        resultRepo.findResultsByUserIn(userRepo.findUserByDepartmentContains(search)));
+                        resultRepo.findResultsByUserIn(userRepo.findUsersByDepartmentContains(search)));
                 break;
         }
         return "result/resultList";

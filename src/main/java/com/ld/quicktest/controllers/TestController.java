@@ -27,7 +27,7 @@ public class TestController {
     @GetMapping("/search")
     public String findTests(Model model, @RequestParam (name = "search", defaultValue = "") String search) {
         model.addAttribute("tests",
-                testRepo.findTestByTestNameContains(search));
+                testRepo.findTestsByTestNameContains(search));
         return "test/testsList";
     }
 
@@ -56,7 +56,7 @@ public class TestController {
 
     @GetMapping("/{testId}/edit")
     public String editTest( @PathVariable("testId") Long testId, Model model) {
-        model.addAttribute("test", testRepo.findByTestId(testId));
+        model.addAttribute("test", testRepo.findTestByTestId(testId));
         return "test/editTest";
     }
 }

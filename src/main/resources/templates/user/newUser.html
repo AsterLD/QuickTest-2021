@@ -5,7 +5,7 @@
 </head>
 <body>
 <header th:insert="fragments/header"></header>
-<div th:if="${message}"> Пользователь с таким именем уже существует!</div>
+<div th:if="${message}" th:text="${message}"></div>
 <form th:action="@{/users}" th:method="POST">
     <p>Имя пользователя : <input type="text" name="username" required/></p>
     <p>Пароль: <input type="password" name="password" required/></p>

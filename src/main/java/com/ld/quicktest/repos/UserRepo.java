@@ -12,9 +12,9 @@ import java.util.List;
  */
 
 public interface UserRepo extends CrudRepository<User, Long> {
-    User findByUsername(String username);
-    User findByUserId(Long userId);
-    List<User> findUserByFullNameContains(String fullName);
-    List<User> findUserByDepartmentContains(String department);
+    User findUserByUsername(String username);
+    User findUserByUserId(Long userId);
+    List<User> findUsersByFullNameContains(String fullName);
+    List<User> findUsersByDepartmentContains(String department);
     List<User> findAll();
 }

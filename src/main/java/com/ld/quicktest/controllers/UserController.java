@@ -33,10 +33,10 @@ public class UserController {
                             @RequestParam(name = "searchType") String searchType) {
         switch (searchType) {
             case "fullName":
-                model.addAttribute("users", userRepo.findUserByFullNameContains(search));
+                model.addAttribute("users", userRepo.findUsersByFullNameContains(search));
                 break;
             case "departmentName":
-                model.addAttribute("users", userRepo.findUserByDepartmentContains(search));
+                model.addAttribute("users", userRepo.findUsersByDepartmentContains(search));
                 break;
         }
         return "user/usersList";
@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public String showUserInfo(Model model, @PathVariable Long userId) {
-        model.addAttribute("user", userRepo.findByUserId(userId));
+        model.addAttribute("user", userRepo.findUserByUserId(userId));
         return "user/userInfo";
     }
 
@@ -55,12 +55,12 @@ public class UserController {
 
     @PostMapping
     public String addUser(User user, Model model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
+        User userFromDb = userRepo.findUserByUsername(user.getUsername());
         if (userFromDb != null) {
-            model.addAttribute("message", "Already exist");
+            model.addAttribute("message", "Пользователь с такими именем уже существует");
             return "user/newUser";
         }
-        user.setIsActive(true);
+        user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return "redirect:/users";
@@ -68,31 +68,31 @@ public class UserController {
 
     @GetMapping("/{userId}/edit")
     public String editUser(@PathVariable Long userId, Model model) {
-        model.addAttribute("user", userRepo.findByUserId(userId));
+        model.addAttribute("user", userRepo.findUserByUserId(userId));
         return "user/editUser";
     }
 
     @PatchMapping("/{userId}")
     public String updateUser(@PathVariable Long userId, User user, Model model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
-        if (userFromDb != null && !userFromDb.getUserId().equals(user.getUserId())) {
-            model.addAttribute("message", "Already exist");
+        if (userRepo.findUserByUsername(user.getUsername()) != null &&
+                !userRepo.findUserByUsername(user.getUsername()).getUserId().equals(userId) ) {
+            model.addAttribute("message", "Пользователь с такими именем уже существует");
             return "user/editUser";
         }
-        user.setPassword(userRepo.findByUserId(userId).getPassword());
+        user.setPassword(userRepo.findUserByUserId(userId).getPassword());
         userRepo.save(user);
         return "user/userInfo";
     }
 
     @GetMapping("/{userId}/edit/password")
     public String editUserPassword(@PathVariable Long userId, Model model) {
-        model.addAttribute("user", userRepo.findByUserId(userId));
+        model.addAttribute("user", userRepo.findUserByUserId(userId));
         return "user/editUserPassword";
     }
 
     @PatchMapping("/{userId}/password")
     public String updateUserPassword(@PathVariable Long userId,  String newUserPassword) {
-        User user = userRepo.findByUserId(userId);
+        User user = userRepo.findUserByUserId(userId);
         user.setPassword(passwordEncoder.encode(newUserPassword));
         userRepo.save(user);
         return "redirect:/users";

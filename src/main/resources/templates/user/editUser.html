@@ -6,14 +6,14 @@
 </head>
 <body>
 <header th:insert="fragments/header"></header>
-<div th:if="${message}"> Пользователь с таким именем уже существует!</div>
+<div th:if="${message}" th:text="${message}"> </div>
 <form th:action="@{/users/{userId}(userId=${user.getUserId()})}" th:method="PATCH" th:object="${user}">
     <p>Имя пользователя : <input type="text" th:field="*{username}" required/></p>
     <p>ФИО: <input type="text" th:field="*{fullName}"/></p>
     <p>Должность: <input type="text" th:field="*{position}"/></p>
     <p>Отдел: <input type="text" th:field="*{department}"/></p>
     <p>Email: <input type="email" th:field="*{email}"/></p>
-    <p>Пользователь активен: <input type="checkbox" name="isActive" th:checked="*{isActive}"/></p>
+    <p>Пользователь активен: <input type="checkbox" name="active" th:checked="*{active}"/></p>
     <p>Роль:<select th:field="*{role}">
             <option value="USER" selected >User</option>
             <option value="ADMIN" >Admin</option>

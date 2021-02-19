@@ -39,14 +39,14 @@ public class ExamController {
 
     @GetMapping("/{testId}")
     public String showTest(Model model, @PathVariable("testId") Long testId) {
-        model.addAttribute("test", testRepo.findByTestId(testId));
+        model.addAttribute("test", testRepo.findTestByTestId(testId));
         return "exam/test";
     }
 
     @PostMapping()
     public String saveResult(@RequestParam HashMap<String, String> answers, Long testId, Result result) {
         int answerResult = 0;
-        Test test = testRepo.findByTestId(testId);
+        Test test = testRepo.findTestByTestId(testId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Question> questionList = test.getQuestionList();
 
@@ -62,12 +62,9 @@ public class ExamController {
             }
         result.setNumberOfCorrectAnswers(answerResult);
         result.setNumberOfQuestion(questionList.size());
-        System.out.println(answerResult);
-        System.out.println(questionList.size());
         result.setPercentageOfCorrectAnswers(BigDecimal.valueOf((float) answerResult * 100 / questionList.size()));
-        System.out.println(BigDecimal.valueOf( 100 * answerResult / questionList.size()));
         result.setTest(test);
-        result.setUser(userRepo.findByUsername(auth.getName()));
+        result.setUser(userRepo.findUserByUsername(auth.getName()));
         resultRepo.save(result);
         return "exam/result";
     }

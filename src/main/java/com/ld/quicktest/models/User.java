@@ -23,7 +23,7 @@ public class User {
 
     private String password;
 
-    private boolean isActive;
+    private boolean active;
 
     private String fullName;
 
@@ -67,12 +67,12 @@ public class User {
         this.password = password;
     }
 
-    public boolean isIsActive() {
-        return isActive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean isActive) {
+        this.active = isActive;
     }
 
     public String getFullName() {
@@ -114,4 +114,5 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
