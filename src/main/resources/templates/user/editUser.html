@@ -14,10 +14,12 @@
     <p>Отдел: <input type="text" th:field="*{department}"/></p>
     <p>Email: <input type="email" th:field="*{email}"/></p>
     <p>Пользователь активен: <input type="checkbox" name="active" th:checked="*{active}"/></p>
-    <p>Роль:<select th:field="*{role}">
+    <p>Роль:
+        <select th:field="*{role}">
             <option value="USER" selected >User</option>
             <option value="ADMIN" >Admin</option>
-            </select></p>
+        </select>
+    </p>
     <input type="submit" value="Обновить"/>
 </form>
 </body>

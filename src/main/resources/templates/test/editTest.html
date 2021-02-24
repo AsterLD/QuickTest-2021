@@ -28,8 +28,7 @@
     <p>Вариант C: <a th:text="${question.optionC}"></a></p>
     <p>Вариант D: <a th:text="${question.optionD}"></a></p>
     <p>Ответ: <a th:text="${question.answer}"></a></p>
-    <a th:href="@{/tests/{testId}/{questionId}/edit
-        (testId=${test.getTestId()},questionId=${question.getQuestionId()})}"
+    <a th:href="@{/tests/{testId}/{questionId}/edit(testId=${test.getTestId()},questionId=${question.getQuestionId()})}"
        th:text="Изменить">test</a>
 </div>
 <hr/>

@@ -23,7 +23,7 @@ public class User {
 
     private String password;
 
-    private boolean active;
+    private boolean isActive;
 
     private String fullName;
 
@@ -68,11 +68,11 @@ public class User {
     }
 
     public boolean isActive() {
-        return active;
+        return isActive;
     }
 
     public void setActive(boolean isActive) {
-        this.active = isActive;
+        this.isActive = isActive;
     }
 
     public String getFullName() {

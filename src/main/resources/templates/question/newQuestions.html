@@ -9,7 +9,7 @@
 Добавить новый вопрос:
 <form th:action="@{/tests/{test_id}(test_id=${testId})}" method="POST" th:object="${question}">
     <p>Текст вопроса: <input type="text" name="questionText"/></p>
-    <p>Вариант А : <input type="text" name="optionA"/></p>
+    <p>Вариант А: <input type="text" name="optionA"/></p>
     <p>Вариант B: <input type="text" name="optionB"/></p>
     <p>Вариант C: <input type="text" name="optionC"/></p>
     <p>Вариант D: <input type="text" name="optionD"/></p>
