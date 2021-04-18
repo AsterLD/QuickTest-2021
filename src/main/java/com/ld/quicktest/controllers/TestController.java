@@ -1,7 +1,7 @@
 package com.ld.quicktest.controllers;
 
 import com.ld.quicktest.models.Test;
-import com.ld.quicktest.repos.TestRepo;
+import com.ld.quicktest.service.TestService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,23 +12,20 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class TestController {
 
-    private final TestRepo testRepo;
+    private final TestService testService;
 
-    public TestController(TestRepo testRepo) {
-        this.testRepo = testRepo;
+    public TestController(TestService testService) {
+        this.testService = testService;
     }
 
     @GetMapping()
     public String showAllTests(Model model) {
-        model.addAttribute("tests", testRepo.findAll());
-        return "test/testsList";
+        return testService.findAllTests(model);
     }
 
     @GetMapping("/search")
     public String findTests(Model model, @RequestParam (name = "search", defaultValue = "") String search) {
-        model.addAttribute("tests",
-                testRepo.findTestsByTestNameContains(search));
-        return "test/testsList";
+        return testService.findTests(model, search);
     }
 
     @GetMapping("/new")
@@ -38,25 +35,21 @@ public class TestController {
 
     @PostMapping
     public String saveNewTest(Test test) {
-        testRepo.save(test);
-        return "redirect:/tests";
-    }
-
-    @PatchMapping("/{testId}")
-    public String updateTest(@PathVariable("testId") Long testId, Test test) {
-        testRepo.save(test);
-        return "redirect:/tests";
-    }
-
-    @DeleteMapping("/{testId}")
-    public String deleteTest(@PathVariable("testId") Long testId, Test test) {
-        testRepo.deleteById(testId);
-        return "redirect:/tests";
+        return testService.saveTest(test);
     }
 
     @GetMapping("/{testId}/edit")
     public String editTest( @PathVariable("testId") Long testId, Model model) {
-        model.addAttribute("test", testRepo.findTestByTestId(testId));
-        return "test/editTest";
+        return testService.updateTest(model, testId);
+    }
+
+    @PatchMapping("/{testId}")
+    public String updateTest(Test test) {
+        return testService.saveTest(test);
+    }
+
+    @DeleteMapping("/{testId}")
+    public String deleteTest(@PathVariable("testId") Long testId) {
+        return testService.deleteTest(testId);
     }
 }

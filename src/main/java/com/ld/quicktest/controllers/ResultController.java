@@ -1,10 +1,6 @@
 package com.ld.quicktest.controllers;
 
-import com.ld.quicktest.repos.ResultRepo;
-import com.ld.quicktest.repos.TestRepo;
-import com.ld.quicktest.repos.UserRepo;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.ld.quicktest.service.ResultService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,42 +11,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/results")
 public class ResultController {
 
-    private final ResultRepo resultRepo;
-    private final UserRepo userRepo;
-    private final TestRepo testRepo;
+    private final ResultService resultService;
 
-    public ResultController(ResultRepo resultRepo, UserRepo userRepo, TestRepo testRepo) {
-        this.resultRepo = resultRepo;
-        this.userRepo = userRepo;
-        this.testRepo = testRepo;
+    public ResultController(ResultService resultService) {
+        this.resultService = resultService;
     }
 
     @GetMapping()
     public String showResults(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("results",
-                resultRepo.findResultsByUser(userRepo.findUserByUsername(auth.getName())));
-        return "result/resultList";
+        return resultService.showResult(model);
     }
 
     @GetMapping("/search")
     public String findResult(Model model,
                              @RequestParam (name = "search", defaultValue = "") String search,
                              @RequestParam(name = "searchType") String searchType) {
-        switch (searchType) {
-            case "fullName":
-                model.addAttribute("results",
-                        resultRepo.findResultsByUserIn(userRepo.findUsersByFullNameContains(search)));
-                break;
-            case "testName":
-                model.addAttribute("results",
-                        resultRepo.findResultsByTestIn(testRepo.findTestsByTestNameContains(search)));
-                break;
-            case "departmentName":
-                model.addAttribute("results",
-                        resultRepo.findResultsByUserIn(userRepo.findUsersByDepartmentContains(search)));
-                break;
-        }
-        return "result/resultList";
+        return resultService.findResults(model, search, searchType);
     }
 }
