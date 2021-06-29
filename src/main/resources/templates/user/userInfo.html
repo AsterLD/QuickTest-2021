@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Описание пользователя</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
     <p>Имя пользователя : <a th:text="${user.getUsername()}"></a></p>
     <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
     <p>Должность: <a th:text="${user.getPosition()}"></a></p>
@@ -17,5 +19,6 @@
     <form th:method="DELETE" th:action="@{/users/{userId}(userId=${user.getUserId()})}">
         <input type="submit" value="Удалить пользователя"/>
     </form>
+</div>
 </body>
 </html>

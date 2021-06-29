@@ -2,14 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Добро пожаловать</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<h3>Добро пожаловать</h3>
-<p><a sec:authorize ="!hasAnyAuthority('ADMIN', 'USER')"th:href="@{/login}">Авторизация</a></p>
-<p><a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Список тестов, доступных для прохождения</a></p>
-<p><a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты тестирования</a></p>
-<p><a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Список пользователей</a></p>
-<p><a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Список всех тестирований </a></p>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <h3>Добро пожаловать</h3>
+    <p><a sec:authorize ="!hasAnyAuthority('ADMIN', 'USER')"th:href="@{/login}">Авторизация</a></p>
+    <p><a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Список тестов, доступных для прохождения</a></p>
+    <p><a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты тестирования</a></p>
+    <p><a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Список пользователей</a></p>
+    <p><a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Список всех тестирований </a></p>
+</div>
 </body>
 </html>

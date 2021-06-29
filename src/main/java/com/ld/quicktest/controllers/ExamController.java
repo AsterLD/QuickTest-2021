@@ -1,11 +1,9 @@
 package com.ld.quicktest.controllers;
 
-import com.ld.quicktest.models.Result;
 import com.ld.quicktest.service.ExamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("/exam")
@@ -27,8 +25,4 @@ public class ExamController {
         return examService.showTestInfo(model, testId);
     }
 
-    @PostMapping()
-    public String saveResult(@RequestParam HashMap<String, String> answers, Long testId, Result result) {
-        return examService.saveResult(answers, testId, result);
-    }
 }

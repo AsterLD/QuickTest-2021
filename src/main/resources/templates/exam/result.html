@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Тестирование завершено</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<h3>Тестирование завершено.</h3>
-<p>Вернутся в <a th:href="@{/}">главное меню</a></p>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <h3>Тестирование завершено.</h3>
+    <p>Вернутся в <a th:href="@{/}">главное меню</a></p>
+</div>
 </body>
 </html>

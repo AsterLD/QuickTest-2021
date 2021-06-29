@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Список всех тестирований</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<form th:action="@{/tests/search}">
-    <p>Поиск тестирования:</p>
-    <input type="text" name="search"/>
-    <input type="submit" value="Поиск"/>
-</form>
-<p><a th:href="@{/tests/new}">Добавить новое тестирование</a></p>
-<hr/>
-<p>Список тестирований:</p>
-<div th:each="test : ${tests}">
-    <p>ID Тестирования: <a th:text="${test.getTestId()}"></a></p>
-    <p>Название: <a th:text="${test.getTestName()}"></a></p>
-    <p>Количество вопросов: <a th:text="${test.getQuestionList().size()}"></a></p>
-    <a th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <form th:action="@{/tests/search}">
+        <p>Поиск тестирования:</p>
+        <input type="text" name="search"/>
+        <input type="submit" value="Поиск"/>
+    </form>
+    <p><a th:href="@{/tests/new}">Добавить новое тестирование</a></p>
     <hr/>
+    <p>Список тестирований:</p>
+    <div th:each="test : ${tests}">
+        <p>ID Тестирования: <a th:text="${test.getTestId()}"></a></p>
+        <p>Название: <a th:text="${test.getTestName()}"></a></p>
+        <p>Количество вопросов: <a th:text="${test.getQuestionList().size()}"></a></p>
+        <a th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
+        <hr/>
+    </div>
 </div>
 </body>
 </html>

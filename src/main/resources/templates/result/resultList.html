@@ -3,31 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Результаты всех тестирований</title>
+    <link th:href="@{/css/tableStyle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<form sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
-    <p>Поиск результатов:</p>
-    <input type="text" name="search"/>
-    Искать по:
-    <select name="searchType">
-        <option value="fullName" >ФИО</option>
-        <option value="testName" >Тестированию</option>
-        <option value="departmentName" >Отделу</option>
-    </select>
-    <input type="submit" value="Поиск"/>
-    <hr/>
-</form>
-Результаты:
-<div th:each="result : ${results}">
-    <p>ФИО: <a th:text="${result.getUser().getFullName()}"></a></p>
-    <p>Отдел: <a th:text="${result.getUser().getDepartment()}"></a></p>
-    <p>Название тестирования : <a th:text="${result.getTest().getTestName()}"></a></p>
-    <p>Правильно ответил на: <a th:text="${result.getNumberOfCorrectAnswers()}"></a> из
-        <a th:text="${result.getNumberOfQuestion()}"></a> Вопросов</p>
-    <p>Процент правильных ответов : <a th:text="${result.getPercentageOfCorrectAnswers()}"></a>%</p>
-    <p>Пройден: <a th:text="${#dates.format(result.getResultDate(), 'yyyy-MM-dd HH:mm:ss')}"></a></p>
-    <hr/>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <form sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
+        <p>Поиск результатов:</p>
+        <input type="text" name="search"/>
+        Искать по:
+        <select name="searchType">
+            <option value="fullName" >ФИО</option>
+            <option value="testName" >Тестированию</option>
+            <option value="departmentName" >Отделу</option>
+        </select>
+        <input type="submit" value="Поиск"/>
+        <hr/>
+    </form>
+    Результаты:
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <th>Отдел</th>
+            <th>Название тестирования</th>
+            <th>Количество правильных ответов</th>
+            <th>Процент правильных ответов</th>
+            <th>Время прохождения</th>
+            <th>Дата прохождения</th>
+        </tr>
+        <div th:each="result : ${results}">
+            <tr>
+                <td><a th:text="${result.getUser().getFullName()}"></a></td>
+                <td><a th:text="${result.getUser().getDepartment()}"></a></td>
+                <td><a th:text="${result.getTest().getTestName()}"></a></td>
+                <td><a th:text="${result.getNumberOfCorrectAnswers()}"></a> из <a th:text="${result.getNumberOfQuestion()}"></a></td>
+                <td><a th:text="${result.getPercentageOfCorrectAnswers()}"></a>%</td>
+                <td><a th:text="${result.getResultTime()}"></a></td>
+                <td><a th:text="${#dates.format(result.getResultDate(), 'yyyy-MM-dd HH:mm:ss')}"></a></td>
+            </tr>
+        </div>
+    </table>
 </div>
 </body>
 </html>

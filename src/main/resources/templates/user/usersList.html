@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Список пользователей</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<form th:action="@{/users/search}">
-    <p>Поиск пользователей:</p>
-    <input type="text" name="search"/>
-    Искать по:
-    <select name="searchType">
-        <option value="fullName" >ФИО</option>
-        <option value="departmentName" >Отделу</option>
-    </select>
-    <input type="submit" value="Поиск"/>
-</form>
-<h3>Список пользователей:</h3>
-<p><a th:href="@{/users/new/}">Добавить нового пользователя</a></p>
-<div th:each="user : ${users}">
-    <fieldset>
-        <p>Имя пользователя: <a th:text="${user.getUsername()}"></a></p>
-        <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
-        <p>Отдел: <a th:text="${user.getDepartment()}"></a></p>
-        <a th:href="@{/users/{userId}(userId=${user.getUserId()})}">Подробнее</a>
-    </fieldset>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <form th:action="@{/users/search}">
+        <p>Поиск пользователей:</p>
+        <input type="text" name="search"/>
+        Искать по:
+        <select name="searchType">
+            <option value="fullName" >ФИО</option>
+            <option value="departmentName" >Отделу</option>
+        </select>
+        <input type="submit" value="Поиск"/>
+    </form>
+    <h3>Список пользователей:</h3>
+    <p><a th:href="@{/users/new/}">Добавить нового пользователя</a></p>
+    <div th:each="user : ${users}">
+        <fieldset>
+            <p>Имя пользователя: <a th:text="${user.getUsername()}"></a></p>
+            <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
+            <p>Отдел: <a th:text="${user.getDepartment()}"></a></p>
+            <a th:href="@{/users/{userId}(userId=${user.getUserId()})}">Подробнее</a>
+        </fieldset>
+    </div>
 </div>
 </body>
 </html>

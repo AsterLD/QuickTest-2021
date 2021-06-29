@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
+    <link th:href="@{/css/headerStyle.css}" rel="stylesheet" type="text/css" />
 </head>
-<div th:fragment="header">
-    <header>
-        <fieldset>
-            <a th:href="@{/}">Главная</a>
-            <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Тестирования</a>
-            <a sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты</a>
-            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
-            <a sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a>
-            <form th:action="@{/logout}" th:method="POST" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"
-                  th:align="right">
-                Текущий пользователь: <a th:text="${#authentication.getName()}"></a>
+<header th:fragment="header" class="header-block">
+    <div class="navigation-block">
+        <a class="header-text" th:href="@{/}">Главная</a>
+        <a class="header-text" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Тестирования</a>
+        <a class="header-text" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты</a>
+        <a class="header-text" sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
+        <a class="header-text" sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a>
+    </div>
+    <div class="user-block">
+        <div th:if="!${#authorization.expression('hasAnyAuthority(''ADMIN'', ''USER'')')}">
+            <a class="header-text" th:href="@{/login}">Авторизация</a>
+        </div>
+        <div th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''USER'')')}">
+            <form th:action="@{/logout}" th:method="POST">
+                <a class="header-text" th:text="'Текущий пользователь: ' + ${#authentication.getName()}"></a>
                 <input type="submit" value="Выйти"/>
             </form>
-        </fieldset>
-    </header>
-</div>
+        </div>
+    </div>
+</header>
 </html>

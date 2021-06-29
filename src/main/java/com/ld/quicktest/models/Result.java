@@ -1,7 +1,6 @@
 package com.ld.quicktest.models;
 
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,6 +29,8 @@ public class Result {
     private int numberOfQuestion;
 
     private int numberOfCorrectAnswers;
+
+    private String resultTime;
 
     @Column(precision = 3)
     private BigDecimal percentageOfCorrectAnswers;
@@ -76,6 +77,14 @@ public class Result {
 
     public void setNumberOfCorrectAnswers(int numberOfCorrectAnswers) {
         this.numberOfCorrectAnswers = numberOfCorrectAnswers;
+    }
+
+    public String getResultTime() {
+        return resultTime;
+    }
+
+    public void setResultTime(String resultTime) {
+        this.resultTime = resultTime;
     }
 
     public BigDecimal getPercentageOfCorrectAnswers() {

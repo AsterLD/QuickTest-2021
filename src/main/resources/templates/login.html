@@ -2,15 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Авторизация</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header th:insert="fragments/header"></header>
-<form th:action="@{/login}" method="post">
-    <p>Имя пользователя:</p>
-    <p><input type="text" name="username"/></p>
-    <p>Пароль:</p>
-    <p><input type="password" name="password"/></p>
-    <div><input type="submit" value="Войти"/></div>
-</form>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <div class="authorization-block">
+        <form th:action="@{/login}" method="post">
+            <p>Имя пользователя:</p>
+            <p><input type="text" name="username"/></p>
+            <p>Пароль:</p>
+            <p><input type="password" name="password"/></p>
+            <div><input type="submit" value="Войти"/></div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

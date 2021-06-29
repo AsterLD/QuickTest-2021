@@ -1,0 +1,15 @@
+.main-block {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1300px;
+}
+
+.authorization-block {
+    width: 30%;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
