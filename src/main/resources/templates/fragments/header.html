@@ -8,16 +8,16 @@
 <header th:fragment="header" class="header-block">
     <div class="navigation-block">
         <a class="header-text" th:href="@{/}">Главная</a>
-        <a class="header-text" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/exam}">Тестирования</a>
-        <a class="header-text" sec:authorize ="hasAnyAuthority('ADMIN', 'USER')"th:href="@{/results}">Результаты</a>
-        <a class="header-text" sec:authorize ="hasAuthority('ADMIN')" th:href="@{/users}">Пользователи</a>
+        <a class="header-text" sec:authorize ="hasAnyAuthority( 'USER', 'ADMIN')" th:href="@{/exam}">Тестирования</a>
+        <a class="header-text" sec:authorize ="hasAnyAuthority( 'USER', 'ADMIN')"th:href="@{/results}">Результаты</a>
+        <a class="header-text" sec:authorize ="hasAnyAuthority( 'USER', 'ADMIN')" th:href="@{/users}">Пользователи</a>
         <a class="header-text" sec:authorize ="hasAuthority('ADMIN')" th:href="@{/tests}">Редактирование тестирований</a>
     </div>
     <div class="user-block">
-        <div th:if="!${#authorization.expression('hasAnyAuthority(''ADMIN'', ''USER'')')}">
+        <div sec:authorize ="isAnonymous()">
             <a class="header-text" th:href="@{/login}">Авторизация</a>
         </div>
-        <div th:if="${#authorization.expression('hasAnyAuthority(''ADMIN'', ''USER'')')}">
+        <div sec:authorize ="!isAnonymous()">
             <form th:action="@{/logout}" th:method="POST">
                 <a class="header-text" th:text="'Текущий пользователь: ' + ${#authentication.getName()}"></a>
                 <input type="submit" value="Выйти"/>

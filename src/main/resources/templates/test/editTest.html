@@ -8,32 +8,34 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    <h3>Редактирование тестирования</h3>
+<div class="element-block">
     <form th:method="PATCH" th:action="@{/tests/{testId}(testId=${test.getTestId()})}" th:object="${test}">
-        Название тестирования:
-        <p><input type="text" th:field="*{testName}" id="testName"/></p>
-        Доступно для пользователей?
-        <p><input type="checkbox" th:field="*{active}" id="isActive"/></p>
+        <p>Название тестирования:</p>
+        <p><input type="text" th:name="testName" th:value="${test.getTestName()}" size = "100"/></p>
+        <p>Доступен для пользователей? <input type="checkbox" th:name="active" th:checked="${test.active}"/></p>
         <p><input type="submit" value="Обновить данные"/></p>
     </form>
     <form th:method="DELETE" th:action="@{/tests/{testId}(testId=${test.getTestId()})}" th:object="${test}">
         <p><input type="submit" value="Удалить тестирование"/></p>
     </form>
-    Список вопросов:
-    <p><a th:href="@{/tests/{testId}/new(testId=${test.getTestId()})}">Добавить вопрос</a></p>
-    <div th:each="question : ${test.getQuestionList()}">
-        <hr/>
+</div>
+<div class="element-block">
+    <h3>Список вопросов:</h3>
+    <div class="element-block"><a class="link-text" th:href="@{/tests/{testId}/new(testId=${test.getTestId()})}">Добавить вопрос</a></div>
+    <div class="element-block" th:each="question : ${test.getQuestionList()}">
         <p>ID Вопроса: <a th:text="${question.questionId}"></a> </p>
         <p>Текст вопроса : <a th:text="${question.questionText}"></a></p>
-        <p>Вариант А: <a th:text="${question.optionA}"></a></p>
-        <p>Вариант B: <a th:text="${question.optionB}"></a></p>
-        <p>Вариант C: <a th:text="${question.optionC}"></a></p>
-        <p>Вариант D: <a th:text="${question.optionD}"></a></p>
-        <p>Ответ: <a th:text="${question.answer}"></a></p>
-        <a th:href="@{/tests/{testId}/{questionId}/edit(testId=${test.getTestId()},questionId=${question.getQuestionId()})}"
-           th:text="Изменить">test</a>
+        <div class="element-block">
+            <div th:if="${question.getAnswerList().size == 0}">
+                <p>У данного вопроса еще нет ответов.</p>
+            </div>
+            <div th:each="answer : ${question.getAnswerList()}">
+                <p><input type="checkbox" name="isRightAnswer" th:checked="${answer.rightAnswer}" disabled /> Ответ: <a th:text="${answer.getAnswerText()}"></a></p>
+            </div>
+        </div>
+        <p><a class="link-text" th:href="@{/tests/{testId}/{questionId}/edit(testId=${test.getTestId()},questionId=${question.getQuestionId()})}" th:text="Изменить">t</a></p>
     </div>
-    <hr/>
+</div>
 </div>
 </body>
 </html>

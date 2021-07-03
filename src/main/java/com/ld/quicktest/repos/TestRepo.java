@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface TestRepo extends CrudRepository<Test, Long> {
     List<Test> findAll();
+    List<Test> findTestByIsActive(Boolean isActive);
     Test findTestByTestId(Long testId);
     List<Test> findTestsByTestNameContains(String testName);
 }

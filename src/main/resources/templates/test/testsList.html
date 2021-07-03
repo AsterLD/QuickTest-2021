@@ -8,20 +8,20 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    <form th:action="@{/tests/search}">
-        <p>Поиск тестирования:</p>
+    <form class="element-block" th:action="@{/tests/search}">
+        <h3>Поиск тестирования:</h3>
         <input type="text" name="search"/>
         <input type="submit" value="Поиск"/>
     </form>
-    <p><a th:href="@{/tests/new}">Добавить новое тестирование</a></p>
-    <hr/>
-    <p>Список тестирований:</p>
-    <div th:each="test : ${tests}">
+    <div class="element-block">
+        <a class="link-text" th:href="@{/tests/new}">Добавить новое тестирование</a>
+    </div>
+    <h3>Список тестирований:</h3>
+    <div class="element-block" th:each="test : ${tests}">
+        <p><a class="link-text" th:text="'Название: ' + ${test.getTestName()}" th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}"></a></p>
         <p>ID Тестирования: <a th:text="${test.getTestId()}"></a></p>
-        <p>Название: <a th:text="${test.getTestName()}"></a></p>
         <p>Количество вопросов: <a th:text="${test.getQuestionList().size()}"></a></p>
-        <a th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
-        <hr/>
+        <a class="link-text" th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
     </div>
 </div>
 </body>

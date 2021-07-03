@@ -1,6 +1,6 @@
 package com.ld.quicktest.controllers;
 
-import com.ld.quicktest.service.ExamService;
+import com.ld.quicktest.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/exam")
 public class ExamController {
 
-    private final ExamService examService;
+    private final TestService testService;
 
-    public ExamController(ExamService examService) {
-        this.examService = examService;
+    public ExamController(TestService testService) {
+        this.testService = testService;
     }
 
     @GetMapping()
     public String showTestList(Model model) {
-        return examService.showAllTests(model);
+        return testService.findAllAvailableTests(model, true);
     }
 
     @GetMapping("/{testId}")
     public String showTest(Model model, @PathVariable("testId") Long testId) {
-        return examService.showTestInfo(model, testId);
+        return testService.showTestInfo(model, testId, "exam/test");
     }
 
 }

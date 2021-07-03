@@ -8,23 +8,36 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    Изменить существующий вопрос:
-    <form th:method="PATCH"
-          th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
-          th:object="${question}">
-        <p>Текст вопроса: <input type="text" th:field="*{questionText}"/></p>
-        <p>Вариант А: <input type="text" th:field="*{optionA}"/></p>
-        <p>Вариант B: <input type="text" th:field="*{optionB}"/></p>
-        <p>Вариант C: <input type="text" th:field="*{optionC}"/></p>
-        <p>Вариант D: <input type="text" th:field="*{optionD}"/></p>
-        <p>Правильный ответ: <input type="text" th:field="*{answer}"/></p>
-        <p><input type="submit" value="Обновить данные"/></p>
-    </form>
-    <form th:method="DELETE"
-          th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
-          th:object="${question}">
-        <p>    <input type="submit" value="Удалить Вопрос"/></p>
-    </form>
+    <div class="element-block">
+        <form th:method="PATCH"
+              th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
+              th:object="${question}">
+            <p>Текст вопроса: <input type="text" th:name="questionText" th:value="${question.getQuestionText()}" size="100"/></p>
+            <p>У вопроса несколько правильных вариантов ответа?<input type="checkbox" name="multipleAnswerQuestion" th:checked="${question.multipleAnswerQuestion}" /></p>
+            <p><input type="submit" value="Сохранить изменения"/></p>
+        </form>
+        <form th:method="DELETE"
+              th:action="@{/tests/{testId}/{questionId}(testId=${testId},questionId=${question.getQuestionId()})}"
+              th:object="${question}">
+            <p><input type="submit" value="Удалить Вопрос"/></p>
+        </form>
+    </div>
+<div class="element-block">
+    <h3>Ответы:</h3>
+    <div class="element-block" th:each="answer : ${question.getAnswerList()}">
+        <p><input type="checkbox" name="isRightAnswer" th:checked="${answer.rightAnswer}" disabled /> Текст ответа: <a th:text="${answer.getAnswerText()}"></a></p>
+        <form th:method="DELETE"
+              th:action="@{/tests/{testId}/{questionId}/{answerId}(testId=${testId},questionId=${question.getQuestionId()},answerId=${answer.getAnswerId})}"
+              th:object="${question}">
+            <p><input type="submit" value="Удалить Ответ"/></p>
+        </form>
+    </div>
+</div>
+        <form class="element-block" th:action="@{/tests/{test_id}/{questionId}/(test_id=${testId}, questionId=${question.getQuestionId()})}" method="POST" th:object="${answer}">
+            <p>Текст ответа: <input type="text" name="answerText" size="100"/></p>
+            <p>Правильный ответ? <input type="checkbox" name="rightAnswer"/></p>
+            <input type="submit" value="Добавить ответ"/>
+        </form>
 </div>
 </body>
 </html>

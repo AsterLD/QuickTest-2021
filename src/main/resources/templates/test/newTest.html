@@ -8,13 +8,11 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    <form form th:method="POST" th:action="@{/tests}" th:object="${test}">
-        <h3>Создать новый тестирование</h3>
+    <form class="element-block" th:method="POST" th:action="@{/tests}" th:object="${test}">
         Название тестирования:
-        <p><input type="text" name="testName"/></p>
-        Доступно для пользователей?
-        <p><input type="checkbox" name="active"/></p>
-        <input type="submit" value="Создать тестирование"/>
+        <p><input type="text" name="testName" size = "100"/></p>
+        <p>Доступен для пользователей? <input type="checkbox" name="active"/></p>
+        <p><input type="submit" value="Создать тестирование"/></p>
     </form>
 </div>
 </body>

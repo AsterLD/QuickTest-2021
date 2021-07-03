@@ -1,5 +1,6 @@
 package com.ld.quicktest.service;
 
+import com.ld.quicktest.models.Answer;
 import com.ld.quicktest.models.Question;
 import com.ld.quicktest.models.Result;
 import com.ld.quicktest.models.Test;
@@ -11,9 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ResultService {
@@ -28,20 +28,17 @@ public class ResultService {
         this.userRepo = userRepo;
     }
 
-    public String saveResult(HashMap<String, String> answers, Long testId, Result result) {
+    public String saveResult(Map<String, String> answers, Long testId, Result result) {
         int answerResult = 0;
         Test test = testRepo.findTestByTestId(testId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Question> questionList = test.getQuestionList();
-
         answers.keySet().removeIf(key -> !key.contains("answer"));
-        for(Map.Entry<String, String> answer : answers.entrySet()) {
-            for (Question question: questionList) {
-                if(answer.getKey().contains(question.getQuestionId().toString())) {
-                    if (answer.getValue().equals(question.getAnswer()))
-                        answerResult++;
-                    break;
-                }
+        for (Question question : questionList) {
+            if(question.getRightAnswerMap().keySet().equals(answers.keySet().stream()
+                    .filter(answer -> answer.startsWith("answer[" + question.getQuestionId() + "."))
+                    .collect(Collectors.toSet()))) {
+                answerResult++;
             }
         }
         result.setNumberOfCorrectAnswers(answerResult);

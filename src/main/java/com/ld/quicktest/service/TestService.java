@@ -19,15 +19,20 @@ public class TestService {
         return "test/testsList";
     }
 
+    public String findAllAvailableTests(Model model, Boolean isAvailable) {
+        model.addAttribute("tests", testRepo.findTestByIsActive(isAvailable));
+        return "exam/testsList";
+    }
+
     public String findTests(Model model, String search) {
         model.addAttribute("tests",
                 testRepo.findTestsByTestNameContains(search));
         return "test/testsList";
     }
 
-    public String updateTest(Model model, Long testId) {
+    public String showTestInfo(Model model, Long testId, String page) {
         model.addAttribute("test", testRepo.findTestByTestId(testId));
-        return "test/editTest";
+        return page;
     }
 
     public String saveTest (Test test) {

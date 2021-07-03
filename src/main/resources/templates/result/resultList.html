@@ -9,8 +9,8 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    <form sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
-        <p>Поиск результатов:</p>
+    <form class="element-block" sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
+        <h3>Поиск результатов:</h3>
         <input type="text" name="search"/>
         Искать по:
         <select name="searchType">
@@ -19,9 +19,8 @@
             <option value="departmentName" >Отделу</option>
         </select>
         <input type="submit" value="Поиск"/>
-        <hr/>
     </form>
-    Результаты:
+    <h3>Результаты:</h3>
     <table>
         <tr>
             <th>ФИО</th>

@@ -2,6 +2,9 @@ package com.ld.quicktest.models;
 
 
 import javax.persistence.*;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
  * Класс Question, используется для хранения информации по одному вопросу из тестирования,
@@ -20,19 +23,32 @@ public class Question {
     @JoinColumn(name="test_id")
     private Test test;
 
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
+    private List<Answer> answerList;
+
+    public Map<String, String> getRightAnswerMap() {
+        Map<String, String> rightAnswerMap = new HashMap<>();
+        answerList.forEach((answer) -> {
+            if (answer.isRightAnswer()) {
+                rightAnswerMap.put("answer[" + answer.getQuestion().getQuestionId() + "." + answer.getAnswerId() +"]" , answer.getAnswerText());
+            }
+        });
+        return rightAnswerMap;
+    }
+
     private String questionText;
 
-    private String optionA;
+    private boolean isMultipleAnswerQuestion;
 
-    private String optionB;
-
-    private String optionC;
-
-    private String optionD;
-
-    private String answer;
-
-    private int answerValue;
+    public Map<String, String> getWrongAnswerMap() {
+        Map<String, String> rightAnswerMap = new HashMap<>();
+        answerList.forEach((answer) -> {
+            if (!answer.isRightAnswer()) {
+                rightAnswerMap.put("answer[" + answer.getQuestion().getQuestionId() + "." + answer.getAnswerId() +"]" , answer.getAnswerText());
+            }
+        });
+        return rightAnswerMap;
+    }
 
     public Long getQuestionId() {
         return questionId;
@@ -58,51 +74,19 @@ public class Question {
         this.questionText = questionText;
     }
 
-    public String getOptionA() {
-        return optionA;
+    public List<Answer> getAnswerList() {
+        return answerList;
     }
 
-    public void setOptionA(String optionA) {
-        this.optionA = optionA;
+    public void setAnswerList(List<Answer> answerList) {
+        this.answerList = answerList;
     }
 
-    public String getOptionB() {
-        return optionB;
+    public boolean isMultipleAnswerQuestion() {
+        return isMultipleAnswerQuestion;
     }
 
-    public void setOptionB(String optionB) {
-        this.optionB = optionB;
-    }
-
-    public String getOptionC() {
-        return optionC;
-    }
-
-    public void setOptionC(String optionC) {
-        this.optionC = optionC;
-    }
-
-    public String getOptionD() {
-        return optionD;
-    }
-
-    public void setOptionD(String optionD) {
-        this.optionD = optionD;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public int getAnswerValue() {
-        return answerValue;
-    }
-
-    public void setAnswerValue(int answerValue) {
-        this.answerValue = answerValue;
+    public void setMultipleAnswerQuestion(boolean multipleAnswerQuestion) {
+        isMultipleAnswerQuestion = multipleAnswerQuestion;
     }
 }

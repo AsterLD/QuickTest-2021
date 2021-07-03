@@ -8,14 +8,11 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    Добавить новый вопрос:
-    <form th:action="@{/tests/{test_id}(test_id=${testId})}" method="POST" th:object="${question}">
-        <p>Текст вопроса: <input type="text" name="questionText"/></p>
-        <p>Вариант А: <input type="text" name="optionA"/></p>
-        <p>Вариант B: <input type="text" name="optionB"/></p>
-        <p>Вариант C: <input type="text" name="optionC"/></p>
-        <p>Вариант D: <input type="text" name="optionD"/></p>
-        <p>Правильный ответ: <input type="text" name="answer"/></p>
+    <form class="element-block" th:action="@{/tests/{testId}(testId=${testId})}" method="POST" th:object="${question}">
+        <input type="hidden" th:name="questionId" th:value="${question.getQuestionId()}"/>
+        <p>Текст вопроса:</p>
+        <input type="text" name="questionText" size = "100"/>
+        <p>Вопрос с несколькими вариантами ответа? <input type="checkbox" name="multipleAnswerQuestion"/></p>
         <input type="submit" value="Добавить вопрос"/>
     </form>
 </div>

@@ -19,8 +19,8 @@ public class QuestionController {
     }
 
     @GetMapping("/new")
-    public String createNewQuestion(Model model, @PathVariable("testId") Long testId, Question question) {
-        return questionService.createNewQuestion(model, testId, question);
+    public String createNewQuestion(Model model, @PathVariable("testId") Long testId) {
+        return questionService.createNewQuestion(model, testId);
     }
 
     @PostMapping

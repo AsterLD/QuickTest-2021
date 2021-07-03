@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/results")
@@ -21,7 +21,7 @@ public class ResultController {
     }
 
     @PostMapping("/save")
-    public String saveResult(@RequestParam HashMap<String, String> answers, Long testId, Result result) {
+    public String saveResult(@RequestParam Map<String, String> answers, Long testId, Result result) {
         return resultService.saveResult(answers, testId, result);
     }
 

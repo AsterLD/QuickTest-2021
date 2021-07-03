@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Список доступных тестов</title>
-    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    СПИСОК ТЕСТОВ:
-    <hr/>
-    <div th:each="test : ${tests}">
-        <div th:if="${test.isActive()}">
-            <a th:href="@{/exam/{testId}(testId=${test.getTestId()})}"
+    <h3>Список тестов:</h3>
+    <div class="element-block" th:each="test : ${tests}">
+            <a class="link-text" th:href="@{/exam/{testId}(testId=${test.getTestId()})}"
                th:text="${test.getTestName()}">test</a>
-            <hr/>
-        </div>
     </div>
 </div>
 </body>

@@ -1,5 +1,6 @@
 package com.ld.quicktest.config;
 
+import com.ld.quicktest.service.UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -8,19 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    private final DataSource dataSource;
+    private final UserService userService;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder, DataSource dataSource) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {
         this.passwordEncoder = passwordEncoder;
-        this.dataSource = dataSource;
+        this.userService = userService;
     }
 
     @Override
@@ -40,10 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder)
-                .usersByUsernameQuery("select username, password, is_active from users where username=?")
-                .authoritiesByUsernameQuery("select username, role from users where username=?");
+        auth.userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
     }
 }

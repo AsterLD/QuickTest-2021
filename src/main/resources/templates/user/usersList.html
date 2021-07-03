@@ -8,8 +8,8 @@
 <body>
 <div class="main-block">
     <header th:insert="fragments/header"></header>
-    <form th:action="@{/users/search}">
-        <p>Поиск пользователей:</p>
+    <form class="element-block" th:action="@{/users/search}">
+        <h3>Поиск пользователей:</h3>
         <input type="text" name="search"/>
         Искать по:
         <select name="searchType">
@@ -18,15 +18,15 @@
         </select>
         <input type="submit" value="Поиск"/>
     </form>
+    <div class="element-block">
+        <a class="link-text" th:href="@{/users/new/}">Добавить нового пользователя</a>
+    </div>
     <h3>Список пользователей:</h3>
-    <p><a th:href="@{/users/new/}">Добавить нового пользователя</a></p>
-    <div th:each="user : ${users}">
-        <fieldset>
-            <p>Имя пользователя: <a th:text="${user.getUsername()}"></a></p>
-            <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
-            <p>Отдел: <a th:text="${user.getDepartment()}"></a></p>
-            <a th:href="@{/users/{userId}(userId=${user.getUserId()})}">Подробнее</a>
-        </fieldset>
+    <div class="element-block" th:each="user : ${users}">
+        <p>Имя пользователя: <a th:text="${user.getUsername()}"></a></p>
+        <p>ФИО: <a th:text="${user.getFullName()}"></a></p>
+        <p>Отдел: <a th:text="${user.getDepartment()}"></a></p>
+        <a class="link-text" th:href="@{/users/{userId}(userId=${user.getUserId()})}">Подробнее</a>
     </div>
 </div>
 </body>

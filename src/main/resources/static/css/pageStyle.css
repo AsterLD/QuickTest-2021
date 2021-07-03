@@ -4,6 +4,23 @@
     width: 1300px;
 }
 
+.element-block {
+    border: 2px solid;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.main-text {
+    font-size: 16px;
+}
+
+.link-text {
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight:bold;
+}
+
 .authorization-block {
     width: 30%;
     padding: 20px;

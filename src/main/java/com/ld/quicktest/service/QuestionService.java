@@ -17,7 +17,10 @@ public class QuestionService {
         this.questionRepo = questionRepo;
     }
 
-    public String createNewQuestion(Model model, Long testId, Question question) {
+    public String createNewQuestion(Model model, Long testId) {
+        Question question = new Question();
+
+        questionRepo.save(question);
         model.addAttribute("question", question);
         model.addAttribute("test", testRepo.findTestByTestId(testId));
         return "question/newQuestions";
@@ -26,7 +29,7 @@ public class QuestionService {
     public String saveNewQuestion(Long testId, Question question) {
         question.setTest(testRepo.findTestByTestId(testId));
         questionRepo.save(question);
-        return "redirect:/tests/{testId}/edit";
+        return "question/editQuestion";
     }
 
     public String editQuestion(Model model, Long questionId) {
@@ -37,7 +40,7 @@ public class QuestionService {
     public String updateQuestion(Long testId, Question question) {
         question.setTest(testRepo.findTestByTestId(testId));
         questionRepo.save(question);
-        return "redirect:/tests/{testId}/edit";
+        return "redirect:/tests/{testId}/{questionId}/edit";
     }
 
     public String deleteQuestion(Question question) {

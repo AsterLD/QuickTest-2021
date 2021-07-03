@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Тестирование</title>
-    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/testStyle.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="main-block">
@@ -12,30 +13,25 @@
         <input type="hidden" th:value="${test.testId}" th:name="testId">
         <h2>Тест: <a th:text="${test.getTestName()}"></a> </h2>
         <input type="text" th:id="resultTime" th:name="resultTime" readonly>
-        <div th:each="question : ${test.getQuestionList()}">
-            <fieldset>
-                <p><b th:text="${question.getQuestionText()}"></b></p>
-                <p><input type="radio"
-                          th:value="${question.getOptionA()}"
-                          th:name="${'answer['+ question.questionId + ']'}"
-                          th:text="${question.getOptionA()}">
-                </p>
-                <p><input type="radio"
-                          th:value="${question.getOptionB()}"
-                          th:name="${'answer['+ question.questionId + ']'}"
-                          th:text="${question.getOptionB()}">
-                </p>
-                <p><input type="radio"
-                          th:value="${question.getOptionC()}"
-                          th:name="${'answer['+ question.questionId + ']'}"
-                          th:text="${question.getOptionC()}">
-                </p>
-                <p><input type="radio"
-                          th:value="${question.getOptionD()}"
-                          th:name="${'answer['+ question.questionId + ']'}"
-                          th:text="${question.getOptionD()}">
-                </p>
-            </fieldset>
+        <div class="question-block" th:each="question : ${test.getQuestionList()}">
+            <p class="question-text" th:text="${question.getQuestionText()}"></p>
+            <div th:each="answer : ${question.getAnswerList()}">
+                <div th:if="${question.multipleAnswerQuestion}">
+                    <p class="answer-text" ><input type="checkbox"
+                              th:value="${answer.getAnswerText()}"
+                              th:name="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
+                              th:text="${answer.getAnswerText()}">
+                    </p>
+                </div>
+                <div th:unless="${question.multipleAnswerQuestion}">
+                    <p class="answer-text">
+                        <input type="radio"
+                               th:value="${answer.getAnswerText()}"
+                               th:name="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
+                               th:text="${answer.getAnswerText()}">
+                    </p>
+                </div>
+            </div>
         </div>
         <p><input type="submit" value="Закончить тестирование"></p>
     </form>

@@ -40,7 +40,7 @@ public class TestController {
 
     @GetMapping("/{testId}/edit")
     public String editTest( @PathVariable("testId") Long testId, Model model) {
-        return testService.updateTest(model, testId);
+        return testService.showTestInfo(model, testId, "test/editTest");
     }
 
     @PatchMapping("/{testId}")

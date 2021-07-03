@@ -1,7 +1,12 @@
 package com.ld.quicktest.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Класс User, используется для хранения информации о пользователе,
@@ -10,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User  implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,11 +24,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private List<Result> resultList;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
     private String username;
 
     private String password;
 
-    private boolean isActive;
+    private boolean isEnabled;
 
     private String fullName;
 
@@ -33,7 +43,11 @@ public class User {
 
     private String email;
 
-    private String role;
+    private boolean isAccountNonExpired;
+
+    private boolean isAccountNonLocked;
+
+    private boolean isCredentialsNonExpire;
 
     public Long getUserId() {
         return userId;
@@ -55,6 +69,47 @@ public class User {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpire;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpire() {
+        return isCredentialsNonExpire;
+    }
+
+    public void setCredentialsNonExpire(boolean credentialsNonExpire) {
+        isCredentialsNonExpire = credentialsNonExpire;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -67,12 +122,8 @@ public class User {
         this.password = password;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     public String getFullName() {
@@ -95,12 +146,12 @@ public class User {
         return department;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setDepartment(String department) {

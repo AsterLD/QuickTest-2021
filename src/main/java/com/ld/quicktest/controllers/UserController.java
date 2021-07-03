@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/users")
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -51,8 +53,11 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public String updateUser(Model model, @PathVariable Long userId, User user) {
-        return userService.updateUser(model, user, userId);
+    public String updateUser(@RequestParam String username,
+                             @RequestParam Map<String, String> form,
+                             @RequestParam("userId") User user,
+                             Model model) {
+        return userService.updateUser(username, form, user, model);
     }
 
     @GetMapping("/{userId}/edit/password")

@@ -1,0 +1,13 @@
+.question-block {
+    border: 2px solid;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.question-text {
+    font-size: 20px;
+}
+
+.answer-text {
+    font-size: 16px;
+}
