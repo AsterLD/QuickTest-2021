@@ -26,14 +26,15 @@ public class ResultController {
     }
 
     @GetMapping()
-    public String showResults(Model model) {
-        return resultService.showResult(model);
+    public String showResults(@RequestParam(defaultValue = "1") int page, Model model) {
+        return resultService.showResult(model, page);
     }
 
     @GetMapping("/search")
-    public String findResult(Model model,
-                             @RequestParam (name = "search", defaultValue = "") String search,
-                             @RequestParam(name = "searchType") String searchType) {
-        return resultService.findResults(model, search, searchType);
+    public String findResult(@RequestParam (name = "search", defaultValue = "") String search,
+                             @RequestParam(name = "type") String searchType,
+                             @RequestParam(defaultValue = "1") int page,
+                             Model model) {
+        return resultService.findResults(model, search, searchType, page);
     }
 }

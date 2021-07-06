@@ -10,14 +10,13 @@
     <header th:insert="fragments/header"></header>
     <div class="element-block">
         <div th:if="${message}" th:text="${message}"> </div>
-        <form th:action="@{/users/{userId}(userId=${user.getUserId()})}" th:method="PATCH" th:object="${user}">
-            <p><input type="hidden" th:name="userId" th:value="${user.getUserId()}" /></p>
+        <form th:action="@{/users/{userId}(userId=${user.getUserId()})}" th:method="PATCH">
             <p>Имя пользователя : <input type="text" th:name="username" th:value="${user.getUsername()}" required/></p>
-            <p>ФИО: <input type="text" th:name="fullname" th:value="${user.getFullName()}"/></p>
+            <p>ФИО: <input type="text" th:name="fullName" th:value="${user.getFullName()}"/></p>
             <p>Должность: <input type="text" th:name="position" th:value="${user.getPosition()}"/></p>
             <p>Отдел: <input type="text" th:name="department" th:value="${user.getDepartment()}"/></p>
             <p>Email: <input type="email" th:name="email" th:value="${user.getEmail()}"/></p>
-            <p>Пользователь активен: <input type="checkbox" name="isEnabled" th:checked="${user.isEnabled()}"/></p>
+            <p>Пользователь активен: <input type="checkbox" th:name="isEnabled" th:checked="${user.isEnabled()}"/></p>
             <div class="element-block">
                 Роли:
                 <div th:each="role : ${T(com.ld.quicktest.models.Role).values()}">

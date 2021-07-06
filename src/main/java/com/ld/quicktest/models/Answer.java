@@ -2,6 +2,11 @@ package com.ld.quicktest.models;
 
 import javax.persistence.*;
 
+/*
+ * Класс Answer, используется для хранения информации по одному ответу на воропрос из тестирования,
+ * имеет свзяь многие-к-одному с классом Question
+ */
+
 @Entity
 @Table(name = "answers")
 public class Answer {

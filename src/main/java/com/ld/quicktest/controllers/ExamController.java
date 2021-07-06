@@ -21,8 +21,8 @@ public class ExamController {
     }
 
     @GetMapping("/{testId}")
-    public String showTest(Model model, @PathVariable("testId") Long testId) {
-        return testService.showTestInfo(model, testId, "exam/test");
+    public String showTest(@PathVariable("testId") Long testId, Model model) {
+        return testService.showTestInfo(model, testId, "exam/testPage");
     }
 
 }

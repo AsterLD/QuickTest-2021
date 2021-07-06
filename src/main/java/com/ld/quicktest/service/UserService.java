@@ -3,18 +3,29 @@ package com.ld.quicktest.service;
 import com.ld.quicktest.models.Role;
 import com.ld.quicktest.models.User;
 import com.ld.quicktest.repos.UserRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import static com.ld.quicktest.util.PageListGenerator.generateAvailablePageList;
+
+/*
+ * Класс UserService, хранит в себе логику, для работы UserController.
+ * loadUserByUsername - Возращает пользователя, если такого пользователя не существует, выбрасывает исключение,
+ * findAllUsers - Отображает список всех пользователей, на запрошенной пользователем странице,
+ * findUsers - Отображает пользователя, соответствующего критериям поиска, (поиск осуществляется по ФИО или по Отделу),
+ * findUserInfo - Отображает конкретного пользователя, поиск осуществляется по id,
+ * addUser - Если пользователя с таким username нет, ему присваивается роль USER и он сохраняется в БД,
+ * updateUser - Обновляет данные пользователя, с помощью слияния данных с формы, с данными из БД,
+ * updateUserPassword - Обновляет пароль пользователя,
+ * deleteUser - Удаляет пользователя из БД.
+ */
 
 @Service
 public class UserService implements UserDetailsService {
@@ -36,21 +47,27 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public String findAllUsers(Model model) {
-        model.addAttribute("users", userRepo.findAll());
-        return "user/usersList";
+    public String findAllUsers(Model model, int pageNumber) {
+        Page<User> usersPage = userRepo.findAll(PageRequest.of(pageNumber - 1, 5));
+        generateAvailablePageList(model, pageNumber, usersPage);
+        return "user/usersListPage";
     }
 
-    public String findUsers(Model model, String search, String searchType) {
+    public String findUsers(Model model, String search, String searchType, int pageNumber) {
+        Page<User> usersPage;
         switch (searchType) {
-            case "fullName":
-                model.addAttribute("users", userRepo.findUsersByFullNameContains(search));
+            case "name":
+                usersPage = userRepo.findUsersByFullNameContains(search, PageRequest.of(pageNumber - 1, 5));
+                generateAvailablePageList(model, pageNumber, usersPage);
                 break;
-            case "departmentName":
-                model.addAttribute("users", userRepo.findUsersByDepartmentContains(search));
+            case "department":
+                usersPage = userRepo.findUsersByDepartmentContains(search, PageRequest.of(pageNumber - 1, 5));
+                generateAvailablePageList(model, pageNumber, usersPage);
                 break;
         }
-        return "user/usersList";
+        model.addAttribute("search", search);
+        model.addAttribute("type", searchType);
+        return "user/usersListPage";
     }
 
     public String findUserInfo(Model model, Long userId, String page) {
@@ -62,7 +79,7 @@ public class UserService implements UserDetailsService {
         User userFromDb = userRepo.findUserByUsername(user.getUsername());
         if (userFromDb != null) {
             model.addAttribute("message", "Пользователь с такими именем уже существует");
-            return "user/newUser";
+            return "user/newUserPage";
         }
         user.setEnabled(true);
         user.setAccountNonExpired(true);
@@ -74,20 +91,21 @@ public class UserService implements UserDetailsService {
         return "redirect:/users";
     }
 
-    public String updateUser(String username, Map<String, String> form, User user, Model model) {
-            User userFromDb = userRepo.findUserByUsername(username);
-            if (userFromDb != null && !user.getUserId().equals(userFromDb.getUserId())) {
+    public String updateUser(Model model, Map<String, String> form, User user) {
+            User userFromDb = userRepo.findUserByUserId(user.getUserId());
+            User userFromUsername = userRepo.findUserByUsername(user.getUsername());
+            if (userFromUsername != null && !userFromDb.getUserId().equals(userFromUsername.getUserId())) {
                 model.addAttribute("message", "Пользователь с таким именем уже существует!");
-                model.addAttribute("user", user);
-                return "user/editUser";
+                model.addAttribute("user", userFromDb);
+                return "user/editUserPage";
             }
-            user.setEnabled(form.containsKey("isEnabled"));
-            user.setUsername(username);
-            user.getRoles().clear();
+            userFromDb.setEnabled(form.containsKey("isEnabled"));
+            userFromDb.userMerge(user);
+            userFromDb.getRoles().clear();
             Set<String> userRoles = form.keySet();
             userRoles.retainAll(Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet()));
-            userRoles.forEach(s -> user.getRoles().add(Role.valueOf(s)));
-            userRepo.save(user);
+            userRoles.forEach(s -> userFromDb.getRoles().add(Role.valueOf(s)));
+            userRepo.save(userFromDb);
         return "redirect:/users";
     }
 

@@ -30,3 +30,33 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.pagination {
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.pagination-navigation {
+    border: 2px solid;
+    line-height: 34px;
+    text-align: center;
+    width: 40px;
+    height: 35px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.pagination-navigation-active-element {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.pagination-navigation-inactive-element {
+    text-decoration: none;
+    color: LightGray;
+    text-align: center;
+    pointer-events: none;
+}

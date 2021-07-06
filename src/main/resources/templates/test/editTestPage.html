@@ -30,10 +30,10 @@
                 <p>У данного вопроса еще нет ответов.</p>
             </div>
             <div th:each="answer : ${question.getAnswerList()}">
-                <p><input type="checkbox" name="isRightAnswer" th:checked="${answer.rightAnswer}" disabled /> Ответ: <a th:text="${answer.getAnswerText()}"></a></p>
+                <p><input type="checkbox" name="isRightAnswer" th:checked="${answer.rightAnswer}" disabled/> Ответ: <a th:text="${answer.getAnswerText()}"></a></p>
             </div>
         </div>
-        <p><a class="link-text" th:href="@{/tests/{testId}/{questionId}/edit(testId=${test.getTestId()},questionId=${question.getQuestionId()})}" th:text="Изменить">t</a></p>
+        <p><a class="link-text" th:href="@{/tests/{testId}/{questionId}/edit(testId=${test.getTestId()},questionId=${question.getQuestionId()})}" th:text="Изменить"></a></p>
     </div>
 </div>
 </div>

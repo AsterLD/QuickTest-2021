@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех тестирований</title>
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <form class="element-block" th:action="@{/tests/search}">
+        <h3>Поиск тестирования:</h3>
+        <input type="text" name="search"/>
+        <input type="submit" value="Поиск"/>
+    </form>
+    <div class="element-block">
+        <a class="link-text" th:href="@{/tests/new}">Добавить новое тестирование</a>
+    </div>
+    <h3>Список тестирований:</h3>
+    <div class="element-block" th:if="${mainElementList.size() > 0}" th:each="test : ${mainElementList}">
+        <p><a class="link-text" th:text="'Название: ' + ${test.getTestName()}" th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}"></a></p>
+        <p>ID Тестирования: <a th:text="${test.getTestId()}"></a></p>
+        <p>Количество вопросов: <a th:text="${test.getQuestionList().size()}"></a></p>
+        <a class="link-text" th:href="@{/tests/{testId}/edit(testId=${test.getTestId()})}">Изменить </a>
+    </div>
+    <div class="element-block" th:unless="${mainElementList.size() > 0}">
+        <p>Список тестирований пуст.</p>
+    </div>
+    <div th:if="${availablePagesList != null}">
+        <div class="pagination">
+            <div th:if="${availablePagesList.size() >= 5}" class="pagination">
+                <div class="pagination-navigation" th:if="${pageNumber < 4 }" th:each="page : ${#numbers.sequence(1, 5)}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/tests(page=${page})} : @{/tests/search(search=${search}, page=${page})}" th:text="${page}"></a>
+                </div>
+                <div class="pagination-navigation" th:if="${pageNumber >= 4 && pageNumber <= availablePagesList.size() - 2}" th:each="page : ${#numbers.sequence(pageNumber - 2, pageNumber + 2)}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/tests(page=${page})} : @{/tests/search(search=${search}, page=${page})}" th:text="${page}"></a>
+                </div>
+                <div class="pagination-navigation" th:if="${pageNumber > availablePagesList.size() - 2}" th:each="page : ${#numbers.sequence(availablePagesList.size() - 4, availablePagesList.size())}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/tests(page=${page})} : @{/tests/search(search=${search}, page=${page})}" th:text="${page}"></a>
+                </div>
+            </div>
+            <div th:if="${availablePagesList.size() < 5}" class="pagination">
+                <div class="pagination-navigation" th:each="page : ${#numbers.sequence(1, availablePagesList.size())}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/tests(page=${page})} : @{/tests/search(search=${search}, page=${page})}" th:text="${page}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

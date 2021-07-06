@@ -6,6 +6,14 @@ import com.ld.quicktest.repos.TestRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+/*
+ * Класс QuestionService, хранит в себе логику, для работы QuestionController.
+ * createNewQuestion - Создает пустой вопрос и сохраняет его в БД, а после передает страницу для заполнения данными,
+ * editQuestion - ищет вопрос по ID, и передает страницу для редактирования
+ * updateQuestion - сохраняет вопрос в БД, привязывает к тестированию и передает страницу полученную от контроллера,
+ * deleteQuestion - удаляет вопрос из БД.
+ */
+
 @Service
 public class QuestionService {
 
@@ -19,33 +27,25 @@ public class QuestionService {
 
     public String createNewQuestion(Model model, Long testId) {
         Question question = new Question();
-
         questionRepo.save(question);
         model.addAttribute("question", question);
         model.addAttribute("test", testRepo.findTestByTestId(testId));
-        return "question/newQuestions";
-    }
-
-    public String saveNewQuestion(Long testId, Question question) {
-        question.setTest(testRepo.findTestByTestId(testId));
-        questionRepo.save(question);
-        return "question/editQuestion";
+        return "question/newQuestionsPage";
     }
 
     public String editQuestion(Model model, Long questionId) {
         model.addAttribute("question", questionRepo.findQuestionByQuestionId(questionId));
-        return "question/editQuestion";
+        return "question/editQuestionPage";
     }
 
-    public String updateQuestion(Long testId, Question question) {
+    public String updateQuestion(Long testId, Question question, String page) {
         question.setTest(testRepo.findTestByTestId(testId));
         questionRepo.save(question);
-        return "redirect:/tests/{testId}/{questionId}/edit";
+        return page;
     }
 
     public String deleteQuestion(Question question) {
         questionRepo.delete(question);
         return "redirect:/tests/{testId}/edit";
     }
-
 }

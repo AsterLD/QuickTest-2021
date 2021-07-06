@@ -21,25 +21,25 @@ public class UserController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        return userService.findAllUsers(model);
+    public String showAllUsers(@RequestParam(defaultValue = "1") int page, Model model) {
+        return userService.findAllUsers(model, page);
     }
 
     @GetMapping("/search")
-    public String findUsers(Model model,
-                            @RequestParam (name = "search", defaultValue = "") String search,
-                            @RequestParam(name = "searchType") String searchType) {
-        return userService.findUsers(model, search, searchType);
+    public String findUsers(@RequestParam (name = "search", defaultValue = "") String search,
+                            @RequestParam(name = "type") String searchType,
+                            @RequestParam(defaultValue = "1") int page, Model model) {
+        return userService.findUsers(model, search, searchType, page);
     }
 
     @GetMapping("/{userId}")
-    public String showUserInfo(Model model, @PathVariable Long userId) {
-        return userService.findUserInfo(model, userId, "user/userInfo");
+    public String showUserInfo(@PathVariable Long userId, Model model) {
+        return userService.findUserInfo(model, userId, "user/userInfoPage");
     }
 
     @GetMapping("/new")
     public String createNewUser() {
-        return "user/newUser";
+        return "user/newUserPage";
     }
 
     @PostMapping
@@ -48,21 +48,18 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/edit")
-    public String editUser(Model model, @PathVariable Long userId) {
-        return userService.findUserInfo(model, userId, "user/editUser");
+    public String editUser(@PathVariable Long userId, Model model) {
+        return userService.findUserInfo(model, userId, "user/editUserPage");
     }
 
     @PatchMapping("/{userId}")
-    public String updateUser(@RequestParam String username,
-                             @RequestParam Map<String, String> form,
-                             @RequestParam("userId") User user,
-                             Model model) {
-        return userService.updateUser(username, form, user, model);
+    public String updateUser(@RequestParam Map<String, String> form, User user, Model model) {
+        return userService.updateUser(model, form, user);
     }
 
     @GetMapping("/{userId}/edit/password")
-    public String editUserPassword(Model model, @PathVariable Long userId) {
-        return userService.findUserInfo(model, userId, "user/editUserPassword");
+    public String editUserPassword(@PathVariable Long userId, Model model) {
+        return userService.findUserInfo(model, userId, "user/editUserPasswordPage");
     }
 
     @PatchMapping("/{userId}/password")

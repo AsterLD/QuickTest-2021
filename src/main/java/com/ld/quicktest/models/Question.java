@@ -1,14 +1,12 @@
 package com.ld.quicktest.models;
 
-
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /*
  * Класс Question, используется для хранения информации по одному вопросу из тестирования,
- * имеет свзяь многие-к-одному с классом Test
+ * имеет свзяь многие-к-одному с классом Test,
+ * Метод getRightAnswerMap, для получения коллекции Map, с одним или несколькими правильными ответами.
  */
 
 @Entity
@@ -40,15 +38,6 @@ public class Question {
 
     private boolean isMultipleAnswerQuestion;
 
-    public Map<String, String> getWrongAnswerMap() {
-        Map<String, String> rightAnswerMap = new HashMap<>();
-        answerList.forEach((answer) -> {
-            if (!answer.isRightAnswer()) {
-                rightAnswerMap.put("answer[" + answer.getQuestion().getQuestionId() + "." + answer.getAnswerId() +"]" , answer.getAnswerText());
-            }
-        });
-        return rightAnswerMap;
-    }
 
     public Long getQuestionId() {
         return questionId;

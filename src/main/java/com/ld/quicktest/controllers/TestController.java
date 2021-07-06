@@ -19,18 +19,19 @@ public class TestController {
     }
 
     @GetMapping()
-    public String showAllTests(Model model) {
-        return testService.findAllTests(model);
+    public String showAllTests(@RequestParam(defaultValue = "1") int page, Model model) {
+        return testService.findAllTests(model, page);
     }
 
     @GetMapping("/search")
-    public String findTests(Model model, @RequestParam (name = "search", defaultValue = "") String search) {
-        return testService.findTests(model, search);
+    public String findTests(@RequestParam (name = "search", defaultValue = "") String search,
+                            @RequestParam(defaultValue = "1") int page, Model model) {
+        return testService.findTests(model, search, page);
     }
 
     @GetMapping("/new")
-    public String createNewTest(@ModelAttribute("test") Test test) {
-        return "test/newTest";
+    public String createNewTest() {
+        return "test/newTestPage";
     }
 
     @PostMapping
@@ -40,7 +41,7 @@ public class TestController {
 
     @GetMapping("/{testId}/edit")
     public String editTest( @PathVariable("testId") Long testId, Model model) {
-        return testService.showTestInfo(model, testId, "test/editTest");
+        return testService.showTestInfo(model, testId, "test/editTestPage");
     }
 
     @PatchMapping("/{testId}")

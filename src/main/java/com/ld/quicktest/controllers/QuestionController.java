@@ -19,19 +19,19 @@ public class QuestionController {
     }
 
     @GetMapping("/new")
-    public String createNewQuestion(Model model, @PathVariable("testId") Long testId) {
+    public String createNewQuestion(@PathVariable("testId") Long testId, Model model) {
         return questionService.createNewQuestion(model, testId);
     }
 
     @PostMapping
     public String saveNewQuestion(@PathVariable("testId") Long testId, Question question) {
-        return questionService.saveNewQuestion(testId, question);
+        return questionService.updateQuestion(testId, question, "question/editQuestionPage");
     }
 
     @PatchMapping("/{questionId}")
     public String updateQuestion(@PathVariable("testId") Long testId,
                                  Question question) {
-        return questionService.updateQuestion(testId, question);
+        return questionService.updateQuestion(testId, question, "redirect:/tests/{testId}/{questionId}/edit");
     }
 
     @DeleteMapping("/{questionId}")
@@ -40,9 +40,8 @@ public class QuestionController {
     }
 
     @GetMapping("/{questionId}/edit")
-    public String editQuestion(Model model,
-                               @PathVariable("testId") Long testId,
-                               @PathVariable("questionId") Long questionId) {
+    public String editQuestion(@PathVariable("testId") Long testId,
+                               @PathVariable("questionId") Long questionId, Model model) {
         return questionService.editQuestion(model, questionId);
     }
 }

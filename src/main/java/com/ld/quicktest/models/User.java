@@ -166,4 +166,12 @@ public class User  implements UserDetails {
         this.email = email;
     }
 
+    public void userMerge(User user) {
+        this.username = user.getUsername();
+        this.fullName = user.getFullName();
+        this.position = user.getPosition();
+        this.department = user.getDepartment();
+        this.email = user.getEmail();
+    }
+
 }

@@ -16,14 +16,9 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
-    @GetMapping("/{answerId}")
-    public String getAnswerInfo(Model model, @PathVariable Long answerId) {
-        return answerService.showAnswerInfo(model, answerId);
-    }
-
     @PostMapping
-    public String saveAnswer(Model model, Answer answer, @PathVariable Long questionId, @PathVariable Long testId) {
-        return answerService.saveAnswer(model, answer, questionId, testId);
+    public String saveAnswer(@PathVariable Long questionId, @PathVariable Long testId, Model model, Answer answer) {
+        return answerService.saveAnswer(model, questionId, testId, answer);
     }
 
     @DeleteMapping("/{answerId}")

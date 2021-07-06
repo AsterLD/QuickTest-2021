@@ -7,6 +7,12 @@ import com.ld.quicktest.repos.QuestionRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+/*
+ * Класс AnswerService, хранит в себе логику, для работы AnswerController.
+ * saveAnswer - сохраняет ответ в БД, и возвращает данные для дальнейшего редактирования вопроса.
+ * deleteAnswer - удаляет ответ из БД.
+ */
+
 @Service
 public class AnswerService {
 
@@ -18,12 +24,7 @@ public class AnswerService {
         this.questionRepo = questionRepo;
     }
 
-    public String showAnswerInfo(Model model, Long answerId) {
-        model.addAttribute("answer", answerRepo.findAnswerByAnswerId(answerId));
-        return "exam/test";
-    }
-
-    public String saveAnswer(Model model, Answer answer, Long questionId, Long testId) {
+    public String saveAnswer(Model model, Long questionId, Long testId, Answer answer) {
         Question question = questionRepo.findQuestionByQuestionId(questionId);
         answer.setQuestion(question);
         answerRepo.save(answer);

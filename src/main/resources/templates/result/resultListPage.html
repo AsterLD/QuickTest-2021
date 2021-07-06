@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты всех тестирований</title>
+    <link th:href="@{/css/tableStyle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main-block">
+    <header th:insert="fragments/header"></header>
+    <form class="element-block" sec:authorize ="hasAuthority('ADMIN')" th:action="@{/results/search}">
+        <h3>Поиск результатов:</h3>
+        <input type="text" name="search"/>
+        Искать по:
+        <select name="type">
+            <option value="name" >ФИО</option>
+            <option value="test" >Тестированию</option>
+            <option value="department" >Отделу</option>
+        </select>
+        <input type="submit" value="Поиск"/>
+    </form>
+    <h3>Результаты:</h3>
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <th>Отдел</th>
+            <th>Название тестирования</th>
+            <th>Количество правильных ответов</th>
+            <th>Процент правильных ответов</th>
+            <th>Время прохождения</th>
+            <th>Дата прохождения</th>
+        </tr>
+        <div th:each="result : ${mainElementList}">
+            <tr>
+                <td><a th:text="${result.getUser().getFullName()}"></a></td>
+                <td><a th:text="${result.getUser().getDepartment()}"></a></td>
+                <td><a th:text="${result.getTest().getTestName()}"></a></td>
+                <td><a th:text="${result.getNumberOfCorrectAnswers()}"></a> из <a th:text="${result.getNumberOfQuestion()}"></a></td>
+                <td><a th:text="${result.getPercentageOfCorrectAnswers()}"></a>%</td>
+                <td><a th:text="${result.getResultTime()}"></a></td>
+                <td><a th:text="${#dates.format(result.getResultDate(), 'yyyy-MM-dd HH:mm:ss')}"></a></td>
+            </tr>
+        </div>
+    </table>
+    <div th:if="${availablePagesList != null}">
+        <div class="pagination">
+            <div th:if="${availablePagesList.size() >= 5}" class="pagination">
+                <div class="pagination-navigation" th:if="${pageNumber < 4 }" th:each="page : ${#numbers.sequence(1, 5)}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/results(page=${page})} : @{/results/search(search=${search}, type=${type}, page=${page})}" th:text="${page}"></a>
+                </div>
+                <div class="pagination-navigation" th:if="${pageNumber >= 4 && pageNumber <= availablePagesList.size() - 2}" th:each="page : ${#numbers.sequence(pageNumber - 2, pageNumber + 2)}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/results(page=${page})} : @{/results/search(search=${search}, type=${type}, page=${page})}" th:text="${page}"></a>
+                </div>
+                <div class="pagination-navigation" th:if="${pageNumber > availablePagesList.size() - 2}" th:each="page : ${#numbers.sequence(availablePagesList.size() - 4, availablePagesList.size())}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/results(page=${page})} : @{/results/search(search=${search}, type=${type}, page=${page})}" th:text="${page}"></a>
+                </div>
+            </div>
+            <div th:if="${availablePagesList.size() < 5}" class="pagination">
+                <div class="pagination-navigation" th:each="page : ${#numbers.sequence(1, availablePagesList.size())}">
+                    <a th:attr="class=${page == pageNumber ? 'pagination-navigation-inactive-element' : 'pagination-navigation-active-element'}"
+                       th:href="${#strings.isEmpty(search)} ? @{/results(page=${page})} : @{/results/search(search=${search}, type=${type}, page=${page})}" th:text="${page}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
