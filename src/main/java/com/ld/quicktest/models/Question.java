@@ -5,8 +5,7 @@ import java.util.*;
 
 /*
  * Класс Question, используется для хранения информации по одному вопросу из тестирования,
- * имеет свзяь многие-к-одному с классом Test,
- * Метод getRightAnswerMap, для получения коллекции Map, с одним или несколькими правильными ответами.
+ * имеет свзяь многие-к-одному с классом Test.
  */
 
 @Entity
@@ -24,20 +23,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
     private List<Answer> answerList;
 
-    public Map<String, String> getRightAnswerMap() {
-        Map<String, String> rightAnswerMap = new HashMap<>();
-        answerList.forEach((answer) -> {
-            if (answer.isRightAnswer()) {
-                rightAnswerMap.put("answer[" + answer.getQuestion().getQuestionId() + "." + answer.getAnswerId() +"]" , answer.getAnswerText());
-            }
-        });
-        return rightAnswerMap;
-    }
-
     private String questionText;
 
     private boolean isMultipleAnswerQuestion;
-
 
     public Long getQuestionId() {
         return questionId;

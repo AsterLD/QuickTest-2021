@@ -27,6 +27,7 @@ import static com.ld.quicktest.util.PageListGenerator.generateAvailablePageList;
  * 3. заполняются поля, хранящие дополнительные сведения о тестировании и результат записывается в БД,
  * showResult - Пользователю, на основе данных авторизации, отображаются его результаты в тестировании,
  * findResults - Доступен только администраторами, поиск результатов для составления отчета о тестировании,
+ * getRightAnswerMap - Метод, используемый для получения коллекции Map, с перечнем правильных ответов.
  */
 
 @Service
@@ -50,7 +51,7 @@ public class ResultService {
         List<Question> questionList = test.getQuestionList();
         answers.keySet().removeIf(key -> !key.contains("answer"));
         for (Question question : questionList) {
-            if(question.getRightAnswerMap().keySet().equals(answers.keySet().stream()
+            if(getRightAnswerMap(question).keySet().equals(answers.keySet().stream()
                     .filter(answer -> answer.startsWith("answer[" + question.getQuestionId() + "."))
                     .collect(Collectors.toSet()))) {
                 answerResult++;
@@ -91,5 +92,18 @@ public class ResultService {
                 break;
         }
         return "result/resultListPage";
+    }
+
+    public Map<String, String> getRightAnswerMap(Question question) {
+        Map<String, String> rightAnswerMap = new HashMap<>();
+        question.getAnswerList().forEach((answer) -> {
+            if (answer.isRightAnswer()) {
+                rightAnswerMap.put("answer["
+                        + answer.getQuestion().getQuestionId()
+                        + "." + answer.getAnswerId()
+                        +"]", answer.getAnswerText());
+            }
+        });
+        return rightAnswerMap;
     }
 }
