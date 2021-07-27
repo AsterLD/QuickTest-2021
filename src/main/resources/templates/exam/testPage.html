@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="main-block">
-    <form th:method="POST" th:action="@{/results/save}" th:object="${test}" autocomplete="off">
+    <form th:method="POST" th:action="@{/results}" th:object="${test}" autocomplete="off">
         <script src="/js/timer.js"></script>
         <input type="hidden" th:value="${test.testId}" th:name="testId">
         <h2>Тест: <a th:text="${test.getTestName()}"></a> </h2>
@@ -17,8 +17,9 @@
             <p class="question-text" th:text="${question.getQuestionText()}"></p>
             <div th:each="answer : ${question.getAnswerList()}">
                 <div th:if="${question.multipleAnswerQuestion}">
-                    <p class="answer-text" ><input type="checkbox"
-                              th:value="${answer.getAnswerText()}"
+                    <p class="answer-text" >
+                        <input type="checkbox"
+                              th:value="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
                               th:name="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
                               th:text="${answer.getAnswerText()}">
                     </p>
@@ -26,8 +27,8 @@
                 <div th:unless="${question.multipleAnswerQuestion}">
                     <p class="answer-text">
                         <input type="radio"
-                               th:value="${answer.getAnswerText()}"
-                               th:name="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
+                               th:value="${'answer['+ question.getQuestionId() + '.' + answer.getAnswerId() + ']'}"
+                               th:name="${'answer['+ question.getQuestionId() + ']'}"
                                th:text="${answer.getAnswerText()}">
                     </p>
                 </div>

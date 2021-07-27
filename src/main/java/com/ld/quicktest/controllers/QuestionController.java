@@ -23,6 +23,12 @@ public class QuestionController {
         return questionService.createNewQuestion(model, testId);
     }
 
+    @GetMapping("/{questionId}/edit")
+    public String editQuestion(@PathVariable("testId") Long testId,
+                               @PathVariable("questionId") Long questionId, Model model) {
+        return questionService.editQuestion(model, questionId);
+    }
+
     @PostMapping
     public String saveNewQuestion(@PathVariable("testId") Long testId, Question question) {
         return questionService.updateQuestion(testId, question, "question/editQuestionPage");
@@ -37,11 +43,5 @@ public class QuestionController {
     @DeleteMapping("/{questionId}")
     public String deleteQuestion(Question question) {
         return questionService.deleteQuestion(question);
-    }
-
-    @GetMapping("/{questionId}/edit")
-    public String editQuestion(@PathVariable("testId") Long testId,
-                               @PathVariable("questionId") Long questionId, Model model) {
-        return questionService.editQuestion(model, questionId);
     }
 }

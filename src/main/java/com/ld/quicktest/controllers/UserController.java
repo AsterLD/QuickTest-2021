@@ -57,6 +57,11 @@ public class UserController {
         return userService.updateUser(model, form, user);
     }
 
+    @DeleteMapping("/{userId}")
+    public String deleteUser(@PathVariable Long userId) {
+        return userService.deleteUser(userId);
+    }
+
     @GetMapping("/{userId}/edit/password")
     public String editUserPassword(@PathVariable Long userId, Model model) {
         return userService.findUserInfo(model, userId, "user/editUserPasswordPage");
@@ -65,10 +70,5 @@ public class UserController {
     @PatchMapping("/{userId}/password")
     public String updateUserPassword(@PathVariable Long userId, String newUserPassword) {
         return userService.updateUserPassword(userId, newUserPassword);
-    }
-
-    @DeleteMapping("/{userId}")
-    public String deleteUser(@PathVariable Long userId) {
-        return userService.deleteUser(userId);
     }
 }

@@ -20,12 +20,7 @@ public class ResultController {
         this.resultService = resultService;
     }
 
-    @PostMapping("/save")
-    public String saveResult(@RequestParam Map<String, String> answers, Long testId, Result result) {
-        return resultService.saveResult(answers, testId, result);
-    }
-
-    @GetMapping()
+    @GetMapping
     public String showResults(@RequestParam(defaultValue = "1") int page, Model model) {
         return resultService.showResult(model, page);
     }
@@ -36,5 +31,10 @@ public class ResultController {
                              @RequestParam(defaultValue = "1") int page,
                              Model model) {
         return resultService.findResults(model, search, searchType, page);
+    }
+
+    @PostMapping
+    public String saveResult(@RequestParam Map<String, String> answers, Long testId, Result result) {
+        return resultService.saveResult(answers, testId, result);
     }
 }

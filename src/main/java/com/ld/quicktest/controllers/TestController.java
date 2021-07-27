@@ -18,7 +18,7 @@ public class TestController {
         this.testService = testService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String showAllTests(@RequestParam(defaultValue = "1") int page, Model model) {
         return testService.findAllTests(model, page);
     }

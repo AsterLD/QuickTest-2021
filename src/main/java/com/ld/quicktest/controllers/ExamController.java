@@ -15,7 +15,7 @@ public class ExamController {
         this.testService = testService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String showTestList(Model model) {
         return testService.findAllAvailableTests(model, true);
     }

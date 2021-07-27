@@ -27,7 +27,7 @@ import static com.ld.quicktest.util.PageListGenerator.generateAvailablePageList;
  * 3. заполняются поля, хранящие дополнительные сведения о тестировании и результат записывается в БД,
  * showResult - Пользователю, на основе данных авторизации, отображаются его результаты в тестировании,
  * findResults - Доступен только администраторами, поиск результатов для составления отчета о тестировании,
- * getRightAnswerMap - Метод, используемый для получения коллекции Map, с перечнем правильных ответов.
+ * getRightAnswerSet - Метод, используемый для получения коллекции Set, с перечнем правильных ответов.
  */
 
 @Service
@@ -49,9 +49,8 @@ public class ResultService {
         Test test = testRepo.findTestByTestId(testId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Question> questionList = test.getQuestionList();
-        answers.keySet().removeIf(key -> !key.contains("answer"));
         for (Question question : questionList) {
-            if(getRightAnswerMap(question).keySet().equals(answers.keySet().stream()
+            if(getRightAnswerSet(question).equals(answers.values().stream()
                     .filter(answer -> answer.startsWith("answer[" + question.getQuestionId() + "."))
                     .collect(Collectors.toSet()))) {
                 answerResult++;
@@ -94,16 +93,16 @@ public class ResultService {
         return "result/resultListPage";
     }
 
-    public Map<String, String> getRightAnswerMap(Question question) {
-        Map<String, String> rightAnswerMap = new HashMap<>();
+    public Set<String> getRightAnswerSet(Question question) {
+        Set<String> rightAnswerSet = new HashSet<>();
         question.getAnswerList().forEach((answer) -> {
             if (answer.isRightAnswer()) {
-                rightAnswerMap.put("answer["
+                rightAnswerSet.add("answer["
                         + answer.getQuestion().getQuestionId()
                         + "." + answer.getAnswerId()
-                        +"]", answer.getAnswerText());
+                        +"]");
             }
         });
-        return rightAnswerMap;
+        return rightAnswerSet;
     }
 }
