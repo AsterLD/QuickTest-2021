@@ -10,7 +10,9 @@ import java.util.Set;
 
 /*
  * Класс User, используется для хранения информации о пользователе,
- * имеет свзяь один-ко-многим с классом Result
+ * для сохранения всей информации из другого пользователя, используется метод userMerge,
+ * включает в себя генерацию таблицы, для хранения ролей пользователя, имеет свзяь один-ко-многим,
+ * с классом ( и соответствующей данному классу таблицей results) Result.
  */
 
 @Entity
@@ -90,7 +92,7 @@ public class User  implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return roles;
     }
 
